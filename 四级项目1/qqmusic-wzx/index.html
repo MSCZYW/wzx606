@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- 姓名：王治贤 学号：24002120606 首页【一级页面】 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐复刻-首页</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-common.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-index.css">
+</head>
+<body>
+    <div class="wzx-container">
+        <div class="wzx-header">
+            <h2>发现音乐</h2>
+            <div class="wzx-search-entry" onclick="location.href='search.html'"><span class="iconfont icon-sousuo"></span>搜索</div>
+        </div>
+
+        <!-- 首页轮播 banner -->
+        <div class="wzx-banner">
+            <img src="img/4.jpg" alt="轮播图 1">
+
+
+        <section class="wzx-recommend">
+            <h3>推荐歌单</h3>
+            <div class="wzx-recommend-list"></div>
+        </section>
+
+        <section class="wzx-quick-nav">
+            <div class="wzx-nav-item" onclick="location.href='category.html'">音乐分类</div>
+            <div class="wzx-nav-item" onclick="location.href='playlist.html'">我的歌单</div>
+            <div class="wzx-nav-item" onclick="location.href='player.html'">播放器</div>
+        </section>
+    </div>
+
+    <!-- 底部 tab 导航栏 -->
+    <div class="wzx-tab-bar">
+        <div class="wzx-tab-item active" onclick="location.href='index.html'"><span class="iconfont icon-shouye_3"></span>首页</div>
+        <div class="wzx-tab-item" onclick="location.href='category.html'"><span class="iconfont icon-diantai"></span>栏目</div>
+        <div class="wzx-tab-item" onclick="location.href='search.html'"><span class="iconfont icon-sousuo"></span>搜索</div>
+        <div class="wzx-tab-item" onclick="location.href='mine.html'"><span class="iconfont icon-wode_2"></span>我的</div>
+    </div>
+
+    <script src="js/wzx-data.js"></script>
+    <script src="js/wzx-common.js"></script>
+    <script src="js/wzx-index.js"></script>
+</body>
+</html>

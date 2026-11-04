@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>iconfont-4 · 底部导航（SVG）</title>
+<script src="cdn/iconfont/iconfont.js"></script>
+<style>
+  :root {
+    --wzx-bg: #F2F2F7;
+    --wzx-surface: #FFFFFF;
+    --wzx-nav-bg: #FFFFFF;
+    --wzx-nav-border: rgba(0, 0, 0, 0.08);
+    --wzx-active: #FF2D55;
+    --wzx-inactive: #8E8E93;
+    --wzx-text: #000000;
+    --wzx-text-dim: #8E8E93;
+    --wzx-badge: #FF3B30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: var(--wzx-bg);
+    color: var(--wzx-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* SVG icon 通用样式 */
+  .wzx_icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+
+  /* 手机容器 */
+  .wzx_phone-frame {
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--wzx-bg);
+    position: relative;
+  }
+
+  /* 状态栏 */
+  .wzx_status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .wzx_status-icons {
+    display: flex;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  /* 页面头部 */
+  .wzx_page-header {
+    padding: 8px 20px 20px;
+  }
+  .wzx_page-title {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .wzx_page-subtitle {
+    font-size: 15px;
+    color: var(--wzx-text-dim);
+    margin-top: 6px;
+  }
+
+  /* 内容区 */
+  .wzx_content {
+    padding: 0 16px 120px;
+  }
+  .wzx_list {
+    background: var(--wzx-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .wzx_list-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--wzx-bg);
+  }
+  .wzx_list-item:last-child { border-bottom: none; }
+  .wzx_list-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #FF2D55, #FF6B9D);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .wzx_list-info { flex: 1; min-width: 0; }
+  .wzx_list-title {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .wzx_list-desc {
+    font-size: 13px;
+    color: var(--wzx-text-dim);
+    margin-top: 2px;
+  }
+  .wzx_list-arrow {
+    color: #C7C7CC;
+    font-size: 12px;
+  }
+
+  /* 底部导航 —— 固定底部 */
+  .wzx_tab-bar {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    height: 72px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--wzx-nav-bg);
+    border-top: 1px solid var(--wzx-nav-border);
+    display: flex;
+    z-index: 100;
+  }
+  .wzx_tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+  }
+  .wzx_tab-icon {
+    width: 26px;
+    height: 26px;
+    color: var(--wzx-inactive);
+    transition: color .2s ease, transform .2s ease;
+    display: block;
+  }
+  .wzx_tab-item.wzx_active .wzx_tab-icon {
+    color: var(--wzx-active);
+    transform: translateY(-2px);
+  }
+  .wzx_tab-label {
+    font-size: 10px;
+    margin-top: 3px;
+    color: var(--wzx-inactive);
+    transition: color .2s ease;
+  }
+  .wzx_tab-item.wzx_active .wzx_tab-label {
+    color: var(--wzx-active);
+  }
+
+  /* 数字徽章 */
+  .wzx_badge {
+    position: absolute;
+    top: 0px;
+    right: calc(50% - 17px);
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--wzx-badge);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 1px 2px rgba(255, 59, 48, 0.4);
+  }
+
+  /* 红点 */
+  .wzx_dot {
+    position: absolute;
+    top: 4px;
+    right: calc(50% - 14px);
+    width: 8px;
+    height: 8px;
+    background: var(--wzx-badge);
+    border-radius: 50%;
+  }
+
+  /* 中间凸起按钮 */
+  .wzx_tab-item.wzx_center {
+    padding-top: 0;
+  }
+  .wzx_tab-item.wzx_center .wzx_tab-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--wzx-active);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-16px);
+    box-shadow: 0 6px 16px rgba(255, 45, 85, 0.45);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .wzx_tab-item.wzx_center .wzx_tab-icon {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+  }
+  .wzx_tab-item.wzx_center.wzx_active .wzx_tab-icon-wrap {
+    transform: translateY(-18px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 45, 85, 0.55);
+  }
+  .wzx_tab-item.wzx_center.wzx_active .wzx_tab-icon { color: #fff; }
+
+  /* 入场 */
+  .wzx_tab-bar { animation: wzx_slideUp .5s ease .2s both; }
+  .wzx_content { animation: wzx_fadeIn .5s ease .1s both; }
+  @keyframes wzx_slideUp {
+    from { transform: translateX(-50%) translateY(100%); }
+    to { transform: translateX(-50%) translateY(0); }
+  }
+  @keyframes wzx_fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wzx_phone-frame">
+
+  <!-- 状态栏 -->
+  <div class="wzx_status-bar">
+    <span>9:41</span>
+    <span class="wzx_status-icons">●●●● 🔋</span>
+  </div>
+
+  <!-- 页面标题 -->
+  <header class="wzx_page-header">
+    <div class="wzx_page-title">消息</div>
+    <div class="wzx_page-subtitle">iconfont SVG · 底部导航演示</div>
+  </header>
+
+  <!-- 内容 -->
+  <main class="wzx_content">
+    <div class="wzx_list">
+      <div class="wzx_list-item">
+        <div class="wzx_list-avatar">搜</div>
+        <div class="wzx_list-info">
+          <div class="wzx_list-title">搜索发现</div>
+          <div class="wzx_list-desc">12 条未读 · 点击查看</div>
+        </div>
+        <span class="wzx_list-arrow">›</span>
+      </div>
+      <div class="wzx_list-item">
+        <div class="wzx_list-avatar" style="background: linear-gradient(135deg, #34C759, #30D158)">藏</div>
+        <div class="wzx_list-info">
+          <div class="wzx_list-title">我的收藏</div>
+          <div class="wzx_list-desc">有新内容更新</div>
+        </div>
+        <span class="wzx_list-arrow">›</span>
+      </div>
+      <div class="wzx_list-item">
+        <div class="wzx_list-avatar" style="background: linear-gradient(135deg, #5856D6, #AF52DE)">地</div>
+        <div class="wzx_list-info">
+          <div class="wzx_list-title">常用地址</div>
+          <div class="wzx_list-desc">管理你的位置信息</div>
+        </div>
+        <span class="wzx_list-arrow">›</span>
+      </div>
+      <div class="wzx_list-item">
+        <div class="wzx_list-avatar" style="background: linear-gradient(135deg, #FF9500, #FFCC00)">打</div>
+        <div class="wzx_list-info">
+          <div class="wzx_list-title">打印记录</div>
+          <div class="wzx_list-desc">最近 7 天</div>
+        </div>
+        <span class="wzx_list-arrow">›</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部导航 -->
+  <nav class="wzx_tab-bar">
+    <!-- 搜索 · 激活态 · 数字徽章 -->
+    <a class="wzx_tab-item wzx_active" href="javascript:void(0)" data-tab="home">
+      <svg class="wzx_tab-icon wzx_icon" aria-hidden="true">
+        <use xlink:href="#icon-sousuo"></use>
+      </svg>
+      <span class="wzx_badge">12</span>
+      <span class="wzx_tab-label">搜索</span>
+    </a>
+
+    <!-- 收藏 · 红点 -->
+    <a class="wzx_tab-item" href="javascript:void(0)" data-tab="save">
+      <svg class="wzx_tab-icon wzx_icon" aria-hidden="true">
+        <use xlink:href="#icon-baocun"></use>
+      </svg>
+      <span class="wzx_dot"></span>
+      <span class="wzx_tab-label">收藏</span>
+    </a>
+
+    <!-- 新增 · 中间凸起圆形按钮 -->
+    <a class="wzx_tab-item wzx_center" href="javascript:void(0)" data-tab="add">
+      <span class="wzx_tab-icon-wrap">
+        <svg class="wzx_tab-icon wzx_icon" aria-hidden="true">
+          <use xlink:href="#icon-xinzeng"></use>
+        </svg>
+      </span>
+      <span class="wzx_tab-label">新增</span>
+    </a>
+
+    <!-- 地址 -->
+    <a class="wzx_tab-item" href="javascript:void(0)" data-tab="me">
+      <svg class="wzx_tab-icon wzx_icon" aria-hidden="true">
+        <use xlink:href="#icon-dizhi"></use>
+      </svg>
+      <span class="wzx_tab-label">地址</span>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  // wzx_ 前缀变量
+  var wzx_tabs = document.querySelectorAll('.wzx_tab-item');
+  wzx_tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      wzx_tabs.forEach(function(t) { t.classList.remove('wzx_active'); });
+      this.classList.add('wzx_active');
+    });
+  });
+</script>
+</body>
+</html>

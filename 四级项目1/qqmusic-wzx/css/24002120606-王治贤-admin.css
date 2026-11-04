@@ -1,0 +1,31 @@
+/* 姓名：王治贤 学号：24002120606 后台管理页样式 */
+.wzx-add-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 11px;
+    border-radius: 6px;
+    background: #0b0b18;
+    color: #ffffff;
+    border: 1px solid #333;
+    font-size: 14px;
+}
+.wzx-add-form input:focus {
+    outline: 1px solid #6388ff;
+}
+.wzx-add-form .wzx-btn {
+    width: 100%;
+    margin-top: 4px;
+}
+.wzx-song-admin-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.wzx-admin-row {
+    padding: 10px 0;
+    border-bottom: 1px solid #222244;
+    font-size: 14px;
+    color: #e6e8f5;
+}
+.wzx-admin-row:last-child {
+    border-bottom: none;
+}

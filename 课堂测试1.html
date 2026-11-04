@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--
+  作者：王治贤
+  建立时间：2026-11-04
+  使用大模型：Trae AI
+  功能名称：沪深股票涨跌 Tab 排行（课堂测试1）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>课堂测试1 - 股票涨跌排行</title>
+  <style>
+    /* ===== 基础重置 ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", SimSun, sans-serif;
+      background: #eef1f5;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      color: #333;
+    }
+
+    /* ===== 外部卡片容器 ===== */
+    .wzx_card {
+      width: 480px;
+      background: #fff;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* ===== Tab 按钮栏 ===== */
+    .wzx_tab_bar {
+      display: flex;
+      background: #fff;
+      border-bottom: 2px solid #3498db;
+    }
+
+    .wzx_tab_btn {
+      flex: 1;
+      padding: 12px 0;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 500;
+      color: #2980b9;
+      background: #fff;
+      border: none;
+      border-right: 1px solid #d5e8f5;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .wzx_tab_btn:last-child { border-right: none; }
+
+    .wzx_tab_btn:hover:not(.wzx_active) { background: #ebf5fb; }
+
+    .wzx_tab_btn.wzx_active {
+      background: #3498db;
+      color: #fff;
+      border-bottom-color: #fff;
+    }
+
+    /* ===== 内容区 ===== */
+    .wzx_content { padding: 0 4px; }
+
+    .wzx_panel { display: none; }
+    .wzx_panel.wzx_active { display: block; }
+
+    /* ===== 排行行 ===== */
+    .wzx_row {
+      display: flex;
+      align-items: center;
+      height: 44px;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 12px;
+    }
+    .wzx_row:last-child { border-bottom: none; }
+
+    .wzx_rank {
+      width: 30px;
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      border-right: 1px solid #e8e8e8;
+      padding-right: 8px;
+      margin-right: 10px;
+    }
+
+    .wzx_name { flex: 1; font-size: 14px; color: #333; }
+
+    .wzx_price {
+      width: 70px;
+      text-align: right;
+      font-size: 14px;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    .wzx_change {
+      width: 70px;
+      text-align: right;
+      font-size: 14px;
+      color: #e53935;
+      margin-right: 10px;
+    }
+
+    .wzx_percent {
+      width: 70px;
+      text-align: right;
+      font-size: 14px;
+      color: #e53935;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 整个选项卡组件的根容器 -->
+  <div class="wzx_card" id="wzx_stock_card">
+
+    <!-- Tab 按钮栏：四个固定分类 -->
+    <div class="wzx_tab_bar">
+      <button class="wzx_tab_btn" data-wzx-index="0">沪涨</button>
+      <button class="wzx_tab_btn" data-wzx-index="1">沪跌</button>
+      <button class="wzx_tab_btn wzx_active" data-wzx-index="2">深涨</button>
+      <button class="wzx_tab_btn" data-wzx-index="3">深跌</button>
+    </div>
+
+    <!-- 内容区：四个面板分别对应四个 Tab -->
+    <div class="wzx_content">
+
+      <!-- 沪涨 -->
+      <div class="wzx_panel" data-wzx-panel="0">
+        <div class="wzx_row"><span class="wzx_rank">1</span><span class="wzx_name">浙江龙盛</span><span class="wzx_price">12.35</span><span class="wzx_change">+1.12</span><span class="wzx_percent">9.97%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">2</span><span class="wzx_name">中国船舶</span><span class="wzx_price">28.64</span><span class="wzx_change">+2.18</span><span class="wzx_percent">8.23%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">3</span><span class="wzx_name">上汽集团</span><span class="wzx_price">16.08</span><span class="wzx_change">+1.05</span><span class="wzx_percent">6.98%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">4</span><span class="wzx_name">宝钢股份</span><span class="wzx_price">7.42</span><span class="wzx_change">+0.41</span><span class="wzx_percent">5.85%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">5</span><span class="wzx_name">招商银行</span><span class="wzx_price">38.10</span><span class="wzx_change">+1.56</span><span class="wzx_percent">4.27%</span></div>
+      </div>
+
+      <!-- 沪跌 -->
+      <div class="wzx_panel" data-wzx-panel="1">
+        <div class="wzx_row"><span class="wzx_rank">1</span><span class="wzx_name">中远海控</span><span class="wzx_price">14.22</span><span class="wzx_change">+0.87</span><span class="wzx_percent">6.52%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">2</span><span class="wzx_name">华友钴业</span><span class="wzx_price">42.16</span><span class="wzx_change">+3.02</span><span class="wzx_percent">7.73%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">3</span><span class="wzx_name">恒瑞医药</span><span class="wzx_price">55.38</span><span class="wzx_change">+1.92</span><span class="wzx_percent">3.59%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">4</span><span class="wzx_name">长江电力</span><span class="wzx_price">28.45</span><span class="wzx_change">+0.68</span><span class="wzx_percent">2.45%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">5</span><span class="wzx_name">大秦铁路</span><span class="wzx_price">8.63</span><span class="wzx_change">+0.18</span><span class="wzx_percent">2.13%</span></div>
+      </div>
+
+      <!-- 深涨（默认激活，与 1.jpg 对应） -->
+      <div class="wzx_panel wzx_active" data-wzx-panel="2">
+        <div class="wzx_row"><span class="wzx_rank">1</span><span class="wzx_name">浙能</span><span class="wzx_price">8.88</span><span class="wzx_change">+3.35</span><span class="wzx_percent">60.58%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">2</span><span class="wzx_name">天津松江</span><span class="wzx_price">8.16</span><span class="wzx_change">+0.65</span><span class="wzx_percent">8.66%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">3</span><span class="wzx_name">金瑞科技</span><span class="wzx_price">8.79</span><span class="wzx_change">+0.42</span><span class="wzx_percent">5.02%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">4</span><span class="wzx_name">宏达股份</span><span class="wzx_price">17.22</span><span class="wzx_change">+0.82</span><span class="wzx_percent">5.00%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">5</span><span class="wzx_name">杭齿前进</span><span class="wzx_price">7.23</span><span class="wzx_change">+0.34</span><span class="wzx_percent">4.93%</span></div>
+      </div>
+
+      <!-- 深跌（与 2.jpg 对应） -->
+      <div class="wzx_panel" data-wzx-panel="3">
+        <div class="wzx_row"><span class="wzx_rank">1</span><span class="wzx_name">天顺风能</span><span class="wzx_price">10.52</span><span class="wzx_change">+0.96</span><span class="wzx_percent">10.04%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">2</span><span class="wzx_name">兴源过滤</span><span class="wzx_price">16.02</span><span class="wzx_change">+1.51</span><span class="wzx_percent">10.03%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">3</span><span class="wzx_name">北京正宏</span><span class="wzx_price">36.92</span><span class="wzx_change">+3.36</span><span class="wzx_percent">10.01%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">4</span><span class="wzx_name">美盛文化</span><span class="wzx_price">32.87</span><span class="wzx_change">+2.99</span><span class="wzx_percent">10.01%</span></div>
+        <div class="wzx_row"><span class="wzx_rank">5</span><span class="wzx_name">骅威股份</span><span class="wzx_price">15.16</span><span class="wzx_change">+1.38</span><span class="wzx_percent">10.01%</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 外部引用 Tab 切换脚本 -->
+  <script src="js/wzx-tab.js"></script>
+</body>
+</html>

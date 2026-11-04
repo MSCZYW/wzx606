@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- 姓名：王治贤 学号：24002120606 播放页面 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐复刻-播放器</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-common.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-player.css">
+</head>
+<body>
+    <div class="wzx-container">
+        <div class="wzx-back" onclick="history.back()">← 返回</div>
+        <div class="wzx-card wzx-now-playing">
+            <img src="img/cover1.jpg" alt="当前封面">
+            <h2 class="wzx-song-name">星空夜曲</h2>
+            <p class="wzx-song-singer">薛之谦</p>
+            <div class="wzx-progress-bar">
+                <div class="wzx-progress-inner"></div>
+            </div>
+            <div class="wzx-time-row">
+                <span class="wzx-time-cur">00:00</span>
+                <span class="wzx-time-dur">03:45</span>
+            </div>
+            <div class="wzx-control">
+                <button class="wzx-btn wzx-prev-btn">上一曲</button>
+                <button class="wzx-btn wzx-toggle-btn">暂停</button>
+                <button class="wzx-btn wzx-next-btn">下一曲</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/wzx-common.js"></script>
+    <script src="js/wzx-player.js"></script>
+</body>
+</html>

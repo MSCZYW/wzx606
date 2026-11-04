@@ -1,0 +1,25 @@
+/* 姓名：王治贤 学号：24002120606 歌单页样式 */
+.wzx-playlist-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.wzx-playlist-item:hover {
+    transform: translateY(-3px);
+}
+.wzx-playlist-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.wzx-pl-name {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+.wzx-pl-count {
+    font-size: 12px;
+    color: #9aa0b5;
+}

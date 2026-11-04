@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- 姓名：王治贤 学号：24002120606 个人设置页 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐复刻-个人设置</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-common.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-setting.css">
+</head>
+<body>
+    <div class="wzx-container">
+        <div class="wzx-back" onclick="history.back()">← 返回</div>
+        <h2>个人设置</h2>
+
+        <div class="wzx-card">
+            <div class="wzx-set-row">
+                <span>主题切换</span>
+                <button class="wzx-btn" id="wzx-theme-btn">切换浅色</button>
+            </div>
+            <div class="wzx-set-row">
+                <span>自动播放</span>
+                <input type="checkbox" id="wzx-auto-play">
+            </div>
+            <div class="wzx-set-row">
+                <span>音质选择</span>
+                <select id="wzx-quality">
+                    <option>标准</option>
+                    <option>高品质</option>
+                    <option>无损</option>
+                </select>
+            </div>
+            <div class="wzx-set-row">
+                <span>清除播放缓存</span>
+                <button class="wzx-btn" id="wzx-clear-btn">清除</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/wzx-common.js"></script>
+    <script src="js/wzx-setting.js"></script>
+</body>
+</html>

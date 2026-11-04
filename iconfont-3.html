@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>iconfont-3 · 底部导航（字体图标）</title>
+<link rel="stylesheet" href="cdn/iconfont/iconfont.css">
+<style>
+  :root {
+    --wzx-bg: #F5F5F7;
+    --wzx-surface: #FFFFFF;
+    --wzx-nav-bg: rgba(255, 255, 255, 0.92);
+    --wzx-nav-border: rgba(0, 0, 0, 0.06);
+    --wzx-active: #007AFF;
+    --wzx-inactive: #999999;
+    --wzx-text: #1D1D1F;
+    --wzx-text-dim: #86868B;
+    --wzx-badge: #FF3B30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: var(--wzx-bg);
+    color: var(--wzx-text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 手机容器 */
+  .wzx_phone-frame {
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--wzx-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 顶部状态栏 */
+  .wzx_status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .wzx_status-icons {
+    display: flex;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  /* 页面头部 */
+  .wzx_page-header {
+    padding: 8px 20px 20px;
+  }
+  .wzx_page-title {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .wzx_page-subtitle {
+    font-size: 15px;
+    color: var(--wzx-text-dim);
+    margin-top: 6px;
+  }
+
+  /* 内容区 —— 占位内容 */
+  .wzx_content {
+    padding: 0 16px 120px;
+  }
+  .wzx_card {
+    background: var(--wzx-surface);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .wzx_card-title {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .wzx_card-meta {
+    font-size: 13px;
+    color: var(--wzx-text-dim);
+    margin-top: 4px;
+  }
+  .wzx_card-body {
+    font-size: 14px;
+    color: #3C3C43;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+
+  /* 底部导航 —— 固定 */
+  .wzx_tab-bar {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    height: 72px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--wzx-nav-bg);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-top: 1px solid var(--wzx-nav-border);
+    display: flex;
+    align-items: flex-start;
+    z-index: 100;
+  }
+  .wzx_tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    text-decoration: none;
+    position: relative;
+    transition: color .2s ease;
+    cursor: pointer;
+  }
+  .wzx_tab-item .iconfont {
+    font-size: 24px;
+    color: var(--wzx-inactive);
+    transition: color .2s ease, transform .2s ease;
+    position: relative;
+    display: block;
+  }
+  .wzx_tab-item.wzx_active .iconfont {
+    color: var(--wzx-active);
+    transform: translateY(-2px);
+  }
+  .wzx_tab-label {
+    font-size: 10px;
+    margin-top: 4px;
+    color: var(--wzx-inactive);
+    transition: color .2s ease;
+  }
+  .wzx_tab-item.wzx_active .wzx_tab-label {
+    color: var(--wzx-active);
+  }
+
+  /* 数字徽章 */
+  .wzx_badge {
+    position: absolute;
+    top: 2px;
+    right: calc(50% - 16px);
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--wzx-badge);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 1px 2px rgba(255, 59, 48, 0.4);
+  }
+
+  /* 红点 */
+  .wzx_dot {
+    position: absolute;
+    top: 6px;
+    right: calc(50% - 13px);
+    width: 8px;
+    height: 8px;
+    background: var(--wzx-badge);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--wzx-nav-bg);
+  }
+
+  /* 中间新增按钮 —— 凸起 */
+  .wzx_tab-item.wzx_center {
+    padding-top: 0;
+  }
+  .wzx_tab-item.wzx_center .iconfont {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    font-size: 22px;
+    background: var(--wzx-active);
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+    transform: translateY(-14px);
+    text-align: center;
+  }
+  .wzx_tab-item.wzx_center.wzx_active .iconfont,
+  .wzx_tab-item.wzx_center .iconfont {
+    color: #fff;
+  }
+  .wzx_tab-item.wzx_center.wzx_active .iconfont {
+    transform: translateY(-16px) scale(1.05);
+  }
+  .wzx_tab-item.wzx_center .wzx_tab-label {
+    margin-top: -8px;
+  }
+  .wzx_tab-item.wzx_center.wzx_active .wzx_tab-label {
+    color: var(--wzx-active);
+  }
+
+  /* 入场动画 */
+  .wzx_tab-bar { animation: wzx_slideUp .5s ease .2s both; }
+  .wzx_content > * { animation: wzx_fadeIn .5s ease .1s both; }
+  .wzx_content > *:nth-child(2) { animation-delay: .15s; }
+  .wzx_content > *:nth-child(3) { animation-delay: .2s; }
+  @keyframes wzx_slideUp {
+    from { transform: translateX(-50%) translateY(100%); }
+    to { transform: translateX(-50%) translateY(0); }
+  }
+  @keyframes wzx_fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wzx_phone-frame">
+
+  <!-- 状态栏 -->
+  <div class="wzx_status-bar">
+    <span>9:41</span>
+    <span class="wzx_status-icons">●●●● 🔋</span>
+  </div>
+
+  <!-- 页面标题 -->
+  <header class="wzx_page-header">
+    <div class="wzx_page-title">发现</div>
+    <div class="wzx_page-subtitle">iconfont 字体图标 · 底部导航演示</div>
+  </header>
+
+  <!-- 内容 -->
+  <main class="wzx_content">
+    <div class="wzx_card">
+      <div class="wzx_card-title">今日精选</div>
+      <div class="wzx_card-meta">刚刚更新</div>
+      <div class="wzx_card-body">这是一个使用 iconfont 字体图标的移动端底部导航示例。字体图标的优势在于可以像文字一样自由设置大小和颜色。</div>
+    </div>
+    <div class="wzx_card">
+      <div class="wzx_card-title">徽章与红点</div>
+      <div class="wzx_card-meta">未读消息提示</div>
+      <div class="wzx_card-body">搜索标签上显示数字徽章（12），收藏标签上显示红点，这两种是移动端导航栏常见的未读提示方式。</div>
+    </div>
+    <div class="wzx_card">
+      <div class="wzx_card-title">中间凸起按钮</div>
+      <div class="wzx_card-meta">新增 / 发布</div>
+      <div class="wzx_card-body">中间的新增按钮采用凸起设计，视觉上强调它的特殊地位，常用于发布、拍照等核心操作。</div>
+    </div>
+  </main>
+
+  <!-- 底部导航 -->
+  <nav class="wzx_tab-bar">
+    <!-- 搜索 · 激活态 · 带数字徽章 -->
+    <a class="wzx_tab-item wzx_active" href="javascript:void(0)" data-tab="home">
+      <span class="iconfont icon-sousuo"></span>
+      <span class="wzx_badge">12</span>
+      <span class="wzx_tab-label">搜索</span>
+    </a>
+
+    <!-- 保存/收藏 · 带红点 -->
+    <a class="wzx_tab-item" href="javascript:void(0)" data-tab="save">
+      <span class="iconfont icon-baocun"></span>
+      <span class="wzx_dot"></span>
+      <span class="wzx_tab-label">收藏</span>
+    </a>
+
+    <!-- 新增 · 中间凸起 -->
+    <a class="wzx_tab-item wzx_center" href="javascript:void(0)" data-tab="add">
+      <span class="iconfont icon-xinzeng"></span>
+      <span class="wzx_tab-label">新增</span>
+    </a>
+
+    <!-- 地址/定位 -->
+    <a class="wzx_tab-item" href="javascript:void(0)" data-tab="me">
+      <span class="iconfont icon-dizhi"></span>
+      <span class="wzx_tab-label">地址</span>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  // wzx_ 前缀变量
+  var wzx_tabs = document.querySelectorAll('.wzx_tab-item');
+  wzx_tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      wzx_tabs.forEach(function(t) { t.classList.remove('wzx_active'); });
+      this.classList.add('wzx_active');
+    });
+  });
+</script>
+</body>
+</html>

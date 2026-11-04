@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- 姓名：王治贤 学号：24002120606 后台管理页面 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐复刻-后台管理</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-common.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-admin.css">
+</head>
+<body>
+    <div class="wzx-container">
+        <div class="wzx-back" onclick="history.back()">← 返回</div>
+        <h2>歌曲管理后台</h2>
+
+        <div class="wzx-card wzx-add-form">
+            <h3>新增歌曲</h3>
+            <input id="wzx-song-name" placeholder="歌曲名称">
+            <input id="wzx-song-singer" placeholder="歌手">
+            <button class="wzx-btn" id="wzx-add-song">新增歌曲</button>
+        </div>
+
+        <div class="wzx-card wzx-song-table">
+            <h3>歌曲列表</h3>
+            <div class="wzx-song-admin-list"></div>
+        </div>
+    </div>
+
+    <script src="js/wzx-common.js"></script>
+    <script src="js/wzx-admin.js"></script>
+</body>
+</html>

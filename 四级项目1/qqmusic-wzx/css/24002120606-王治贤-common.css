@@ -1,0 +1,92 @@
+/* 姓名：王治贤 学号：24002120606 全局公共样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #0b0b18;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+img {
+    max-width: 100%;
+    display: block;
+}
+.wzx-container {
+    padding: 16px;
+    padding-bottom: 76px;
+}
+.wzx-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: #121224;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 10px;
+    border-top: 1px solid #222244;
+    z-index: 50;
+}
+.wzx-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 13px;
+    color: #9aa0b5;
+    cursor: pointer;
+    user-select: none;
+}
+.wzx-tab-item .iconfont {
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 3px;
+}
+.wzx-tab-item.active {
+    color: #6388ff;
+}
+.wzx-card {
+    background: #16162c;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+.wzx-btn {
+    background: #3048b0;
+    border: none;
+    color: #ffffff;
+    padding: 9px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.wzx-btn:active {
+    background: #203480;
+}
+.wzx-back {
+    margin-bottom: 12px;
+    color: #88aaff;
+    font-size: 15px;
+    cursor: pointer;
+}
+.wzx-hidden {
+    display: none !important;
+}
+h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}

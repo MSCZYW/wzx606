@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wzxczy · 课堂作品集</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wzx-bg: #14101C;
+    --wzx-surface: #1E182C;
+    --wzx-accent: #F5D000;
+    --wzx-accent-2: #00E5B0;
+    --wzx-text: #F2EADF;
+    --wzx-text-dim: #8A84A0;
+    --wzx-border: #2E2645;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--wzx-bg);
+    color: var(--wzx-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Hero */
+  .wzx_hero {
+    padding: 96px 48px 72px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .wzx_hero-meta {
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--wzx-text-dim);
+    margin-bottom: 24px;
+  }
+  .wzx_hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 3.8rem;
+    line-height: 1.08;
+    letter-spacing: -0.8px;
+  }
+  .wzx_hero h1 em {
+    font-style: italic;
+    color: var(--wzx-accent);
+    font-weight: 400;
+  }
+  .wzx_hero-desc {
+    margin-top: 24px;
+    max-width: 520px;
+    color: var(--wzx-text-dim);
+    font-size: 0.95rem;
+  }
+
+  /* 分区标题 */
+  .wzx_section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+  .wzx_section-label {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--wzx-text-dim);
+    margin-bottom: 12px;
+  }
+  .wzx_section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 32px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--wzx-border);
+  }
+
+  /* 链接卡片 */
+  .wzx_links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--wzx-border);
+  }
+  .wzx_link {
+    background: var(--wzx-surface);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background .25s ease;
+    border-left: 3px solid transparent;
+  }
+  .wzx_link:hover {
+    background: #261F38;
+    border-left-color: var(--wzx-accent);
+  }
+  .wzx_link-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--wzx-text);
+  }
+  .wzx_link-desc {
+    font-size: 0.8rem;
+    color: var(--wzx-text-dim);
+  }
+  .wzx_link-filename {
+    font-size: 0.7rem;
+    color: var(--wzx-accent-2);
+    font-family: 'Inter', monospace;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Hero 渐入 */
+  .wzx_hero, .wzx_section { opacity: 0; animation: wzx_fade 1s ease .1s forwards; }
+  @keyframes wzx_fade { to { opacity: 1; } }
+
+  @media (max-width: 640px) {
+    .wzx_hero { padding: 56px 24px 48px; }
+    .wzx_hero h1 { font-size: 2.4rem; }
+    .wzx_section { padding: 0 24px 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wzx_hero">
+  <div class="wzx_hero-meta">wzxczy · Portfolio</div>
+  <h1>课堂 <em>作品集</em></h1>
+  <p class="wzx_hero-desc">高级网页设计课程练习与项目。每次练习都会在此登记入口，作为持续演进的作品集索引。</p>
+</header>
+
+<!-- 图标库展示 -->
+<section class="wzx_section">
+  <div class="wzx_section-label">Chapter · Icons</div>
+  <h2 class="wzx_section-title">图标库对比</h2>
+  <div class="wzx_links">
+    <a href="iconfont-1.html" class="wzx_link">
+      <div class="wzx_link-title">Font Awesome · 字体图标画廊</div>
+      <div class="wzx_link-desc">使用 CSS + WebFont 方式渲染，展示 Solid / Regular / Brands 三种风格。</div>
+      <div class="wzx_link-filename">iconfont-1.html</div>
+    </a>
+    <a href="inconfont-2.html" class="wzx_link">
+      <div class="wzx_link-title">Lucide · SVG 图标展</div>
+      <div class="wzx_link-desc">纯 SVG + JS 方式，以 24×24 网格和 1.5px 描边的极简语言呈现。</div>
+      <div class="wzx_link-filename">inconfont-2.html</div>
+    </a>
+  </div>
+</section>
+
+<!-- 底部导航练习 -->
+<section class="wzx_section">
+  <div class="wzx_section-label">Chapter · Mobile</div>
+  <h2 class="wzx_section-title">移动端底部导航</h2>
+  <div class="wzx_links">
+    <a href="iconfont-3.html" class="wzx_link">
+      <div class="wzx_link-title">iconfont · 字体图标底部导航</div>
+      <div class="wzx_link-desc">移动端固定底部 4 项导航，含数字徽章与红点提示，中间凸起按钮。</div>
+      <div class="wzx_link-filename">iconfont-3.html</div>
+    </a>
+    <a href="iconfont-4.html" class="wzx_link">
+      <div class="wzx_link-title">iconfont · SVG 底部导航</div>
+      <div class="wzx_link-desc">同图标库的 SVG symbol 方式实现，视觉与交互一致，渲染机制不同。</div>
+      <div class="wzx_link-filename">iconfont-4.html</div>
+    </a>
+  </div>
+</section>
+
+<!-- 课堂练习 -->
+<section class="wzx_section">
+  <div class="wzx_section-label">Chapter · Exercises</div>
+  <h2 class="wzx_section-title">课堂练习</h2>
+  <div class="wzx_links">
+    <a href="10.9.html" class="wzx_link">
+      <div class="wzx_link-title">10 月 9 日练习</div>
+      <div class="wzx_link-desc">课堂示例页面</div>
+      <div class="wzx_link-filename">10.9.html</div>
+    </a>
+    <a href="10.10.html" class="wzx_link">
+      <div class="wzx_link-title">10 月 10 日练习</div>
+      <div class="wzx_link-desc">课堂示例页面</div>
+      <div class="wzx_link-filename">10.10.html</div>
+    </a>
+    <a href="10.10.2.html" class="wzx_link">
+      <div class="wzx_link-title">10 月 10 日练习（二）</div>
+      <div class="wzx_link-desc">课堂示例页面</div>
+      <div class="wzx_link-filename">10.10.2.html</div>
+    </a>
+    <a href="10..14.html" class="wzx_link">
+      <div class="wzx_link-title">10 月 14 日练习</div>
+      <div class="wzx_link-desc">课堂示例页面</div>
+      <div class="wzx_link-filename">10..14.html</div>
+    </a>
+    <a href="10.16.html" class="wzx_link">
+      <div class="wzx_link-title">10 月 16 日练习</div>
+      <div class="wzx_link-desc">课堂示例页面</div>
+      <div class="wzx_link-filename">10.16.html</div>
+    </a>
+  </div>
+</section>
+
+</body>
+</html>

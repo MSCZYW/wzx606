@@ -1,0 +1,72 @@
+{
+  "id": "5231897",
+  "name": "1",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "48076890",
+      "name": "地址",
+      "font_class": "dizhi",
+      "unicode": "e6d7",
+      "unicode_decimal": 59095
+    },
+    {
+      "icon_id": "48088672",
+      "name": "保存",
+      "font_class": "baocun",
+      "unicode": "e6d8",
+      "unicode_decimal": 59096
+    },
+    {
+      "icon_id": "48088673",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e6d9",
+      "unicode_decimal": 59097
+    },
+    {
+      "icon_id": "48088674",
+      "name": "新增",
+      "font_class": "xinzeng",
+      "unicode": "e6da",
+      "unicode_decimal": 59098
+    },
+    {
+      "icon_id": "48088675",
+      "name": "品牌核对",
+      "font_class": "pinpaihedui",
+      "unicode": "e6db",
+      "unicode_decimal": 59099
+    },
+    {
+      "icon_id": "48091536",
+      "name": "打印明细",
+      "font_class": "dayinmingxi",
+      "unicode": "e6dc",
+      "unicode_decimal": 59100
+    },
+    {
+      "icon_id": "48091537",
+      "name": "取消全选",
+      "font_class": "quxiaoquanxuan",
+      "unicode": "e6dd",
+      "unicode_decimal": 59101
+    },
+    {
+      "icon_id": "48091538",
+      "name": "打印",
+      "font_class": "dayin",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "48091539",
+      "name": "全选",
+      "font_class": "quanxuan",
+      "unicode": "e6df",
+      "unicode_decimal": 59103
+    }
+  ]
+}

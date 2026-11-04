@@ -1,0 +1,79 @@
+/* 姓名：王治贤 学号：24002120606 歌曲详情页样式 */
+.wzx-detail-wrap {
+    margin-bottom: 16px;
+}
+.wzx-detail-song {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+.wzx-detail-meta {
+    font-size: 14px;
+    color: #9aa0b5;
+    margin-bottom: 4px;
+}
+.wzx-play-btn {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+.wzx-lyric {
+    margin-top: 16px;
+    color: #bbbbdd;
+    white-space: pre-line;
+    line-height: 1.9;
+    font-size: 14px;
+}
+.wzx-player-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+}
+.wzx-popup-content {
+    background: #16162c;
+    padding: 22px;
+    border-radius: 14px;
+    width: 82%;
+    max-width: 380px;
+}
+.wzx-popup-content h3 {
+    text-align: center;
+    margin-bottom: 14px;
+}
+.wzx-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #2a2a4a;
+    border-radius: 3px;
+    margin: 16px 0;
+    cursor: pointer;
+}
+.wzx-progress-inner {
+    height: 100%;
+    width: 30%;
+    background: #6388ff;
+    border-radius: 3px;
+    transition: width 0.1s ease;
+}
+.wzx-control {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.wzx-close-popup {
+    width: 100%;
+    background: #2a2a4a;
+    border: none;
+    color: #ffffff;
+    padding: 9px 0;
+    border-radius: 20px;
+    cursor: pointer;
+}

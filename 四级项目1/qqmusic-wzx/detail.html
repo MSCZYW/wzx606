@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- 姓名：王治贤 学号：24002120606 歌曲详情【三级页面】 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ音乐复刻-歌曲详情</title>
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-common.css">
+    <link rel="stylesheet" href="css/24002120606-王治贤-detail.css">
+</head>
+<body>
+    <div class="wzx-container">
+        <div class="wzx-back" onclick="history.back()">← 返回</div>
+        <div class="wzx-detail-wrap"></div>
+        <button class="wzx-btn wzx-play-btn">▶ 播放歌曲</button>
+        <div class="wzx-lyric"></div>
+    </div>
+
+    <!-- 播放弹窗 -->
+    <div class="wzx-player-popup wzx-hidden">
+        <div class="wzx-popup-content">
+            <h3>播放器</h3>
+            <div class="wzx-progress-bar">
+                <div class="wzx-progress-inner"></div>
+            </div>
+            <div class="wzx-control">
+                <button class="wzx-btn wzx-prev-btn">上一曲</button>
+                <button class="wzx-btn wzx-toggle-btn">暂停</button>
+                <button class="wzx-btn wzx-next-btn">下一曲</button>
+            </div>
+            <button class="wzx-close-popup">关闭</button>
+        </div>
+    </div>
+
+    <script src="js/wzx-data.js"></script>
+    <script src="js/wzx-common.js"></script>
+    <script src="js/wzx-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+/* 姓名：王治贤 学号：24002120606 设置页样式 */
+.wzx-set-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #222244;
+    font-size: 15px;
+}
+.wzx-set-row:last-child {
+    border-bottom: none;
+}
+.wzx-set-row select {
+    background: #0b0b18;
+    color: #ffffff;
+    border: 1px solid #333;
+    padding: 6px 8px;
+    border-radius: 6px;
+}
+.wzx-set-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #6388ff;
+}

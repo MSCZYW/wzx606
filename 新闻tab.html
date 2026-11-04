@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+  作者：王治贤
+  建立时间：2026-11-04
+  使用大模型：Trae AI
+  功能名称：新闻分类 Tab 选项卡（国内/省内/国际/最热）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新闻 Tab 选项卡</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: #f2f4f7;
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+    }
+
+    /* 选项卡整体容器 */
+    .news-tabs {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+    }
+
+    /* 顶部按钮栏 */
+    .tab-nav {
+      display: flex;
+      border-bottom: 2px solid #eee;
+      background: #fafbfc;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 16px 12px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 500;
+      color: #666;
+      border: none;
+      background: transparent;
+      transition: color 0.25s, background 0.25s;
+      position: relative;
+    }
+
+    .tab-btn:hover {
+      color: #e74c3c;
+      background: #fff7f6;
+    }
+
+    /* 选中态：文字变红 + 底部红线 */
+    .tab-btn.active {
+      color: #e74c3c;
+      background: #fff;
+    }
+
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      left: 20%;
+      right: 20%;
+      bottom: -2px;
+      height: 3px;
+      background: #e74c3c;
+      border-radius: 2px;
+    }
+
+    /* 内容面板：默认隐藏，选中时显示 */
+    .tab-content {
+      padding: 24px 28px;
+    }
+
+    .tab-panel {
+      display: none;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .tab-panel h3 {
+      margin-bottom: 12px;
+      font-size: 18px;
+      color: #1a1a1a;
+    }
+
+    .tab-panel ul {
+      list-style: disc inside;
+      color: #555;
+    }
+
+    .tab-panel li {
+      padding: 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="page-title">新闻分类浏览</h1>
+
+  <!-- 选项卡容器：整个 Tab 组件的挂载点 -->
+  <div class="news-tabs">
+
+    <!-- 顶部按钮栏 -->
+    <div class="tab-nav">
+      <button class="tab-btn active">国内新闻</button>
+      <button class="tab-btn">省内新闻</button>
+      <button class="tab-btn">国际新闻</button>
+      <button class="tab-btn">最热新闻</button>
+    </div>
+
+    <!-- 内容区：各分类对应的面板 -->
+    <div class="tab-content">
+      <div class="tab-panel active">
+        <h3>国内新闻</h3>
+        <ul>
+          <li>全国铁路今日预计发送旅客 1680 万人次</li>
+          <li>我国成功发射新一代通信卫星</li>
+          <li>多地出台新政支持民营经济发展</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel">
+        <h3>省内新闻</h3>
+        <ul>
+          <li>省会城市地铁四号线开通运营</li>
+          <li>省内高校联合发布产学研合作计划</li>
+          <li>本周全省气温回升 5 至 8 摄氏度</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel">
+        <h3>国际新闻</h3>
+        <ul>
+          <li>联合国气候大会达成新协议草案</li>
+          <li>多国领导人出席全球经济峰会</li>
+          <li>国际空间站完成第 70 次舱外活动</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel">
+        <h3>最热新闻</h3>
+        <ul>
+          <li>国产新机发布会在线观看突破 5000 万</li>
+          <li>年度体育赛事冠军刚刚揭晓</li>
+          <li>爆款电影上映三日票房破 15 亿</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 外部引用可复用的 Tab 组件 -->
+  <script src="js/tab.js"></script>
+</body>
+</html>

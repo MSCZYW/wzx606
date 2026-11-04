@@ -1,0 +1,37 @@
+{
+  "id": "5247603",
+  "name": "四级",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11641883",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "16322462",
+      "name": "首页",
+      "font_class": "shouye_3",
+      "unicode": "e6dc",
+      "unicode_decimal": 59100
+    },
+    {
+      "icon_id": "16322526",
+      "name": "我的",
+      "font_class": "wode_2",
+      "unicode": "e6e3",
+      "unicode_decimal": 59107
+    },
+    {
+      "icon_id": "33711694",
+      "name": "电台",
+      "font_class": "diantai",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    }
+  ]
+}

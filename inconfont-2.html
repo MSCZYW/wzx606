@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucide · SVG 图标展</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wzx-bg: #18121E;
+    --wzx-surface: #221A30;
+    --wzx-accent: #F5D000;
+    --wzx-accent-2: #00E5B0;
+    --wzx-text: #F2EADF;
+    --wzx-text-dim: #8A84A0;
+    --wzx-border: #352D4A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--wzx-bg);
+    color: var(--wzx-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--wzx-accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* 顶部导航 — 更简洁 */
+  .wzx_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 36px 64px;
+  }
+  .wzx_nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--wzx-accent);
+  }
+  .wzx_nav-links {
+    display: flex;
+    gap: 40px;
+    font-size: 0.8rem;
+    color: var(--wzx-text-dim);
+  }
+  .wzx_nav-links a { color: var(--wzx-text-dim); letter-spacing: 1px; }
+  .wzx_nav-links a:hover { color: var(--wzx-accent-2); text-decoration: none; }
+  .wzx_nav-links a.wzx_active { color: var(--wzx-accent); }
+
+  /* Hero — 稀疏戏剧性 */
+  .wzx_hero {
+    padding: 96px 64px 80px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .wzx_hero-line {
+    width: 48px;
+    height: 2px;
+    background: var(--wzx-accent);
+    margin-bottom: 32px;
+  }
+  .wzx_hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 4.2rem;
+    line-height: 1.05;
+    letter-spacing: -1px;
+  }
+  .wzx_hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--wzx-text-dim);
+  }
+  .wzx_hero-sub {
+    margin-top: 32px;
+    max-width: 480px;
+    font-size: 0.95rem;
+    color: var(--wzx-text-dim);
+  }
+  .wzx_hero-meta-row {
+    display: flex;
+    gap: 64px;
+    margin-top: 64px;
+  }
+  .wzx_meta-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--wzx-text-dim);
+  }
+  .wzx_meta-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-top: 8px;
+    color: var(--wzx-text);
+  }
+
+  /* 大幅展示 */
+  .wzx_feature-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 64px 80px;
+  }
+  .wzx_feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--wzx-border);
+    margin-bottom: 1px;
+  }
+  .wzx_feature {
+    background: var(--wzx-surface);
+    padding: 72px 48px;
+    text-align: center;
+    transition: background .3s ease;
+  }
+  .wzx_feature:hover { background: var(--wzx-surface); }
+  .wzx_feature:hover i,
+  .wzx_feature:hover svg { color: var(--wzx-accent); }
+  .wzx_feature i,
+  .wzx_feature svg {
+    width: 64px; height: 64px;
+    stroke-width: 1.25;
+    color: var(--wzx-text);
+    transition: color .3s ease, transform .3s ease;
+  }
+  .wzx_feature:hover i,
+  .wzx_feature:hover svg {
+    transform: scale(1.08);
+  }
+  .wzx_feature-name {
+    margin-top: 28px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--wzx-text);
+  }
+  .wzx_feature-desc {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    color: var(--wzx-text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  /* 精选网格 — 更松散 */
+  .wzx_section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 64px 96px;
+  }
+  .wzx_section-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--wzx-text-dim);
+    margin-bottom: 16px;
+  }
+  .wzx_section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 48px;
+  }
+  .wzx_section-title em {
+    font-style: italic;
+    color: var(--wzx-accent-2);
+  }
+  .wzx_lucide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  .wzx_lucide-tile {
+    background: var(--wzx-surface);
+    padding: 40px 24px;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: border-color .25s ease, background .25s ease;
+  }
+  .wzx_lucide-tile:hover {
+    border-color: var(--wzx-accent);
+    background: #2A2140;
+  }
+  .wzx_lucide-tile i,
+  .wzx_lucide-tile svg {
+    width: 36px; height: 36px;
+    stroke-width: 1.5;
+    color: var(--wzx-accent-2);
+  }
+  .wzx_lucide-name {
+    margin-top: 20px;
+    font-size: 0.72rem;
+    color: var(--wzx-text-dim);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* 技术说明条 */
+  .wzx_tech-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 64px;
+    border-top: 1px solid var(--wzx-border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .wzx_tech-item {
+    border-left: 2px solid var(--wzx-accent-2);
+    padding-left: 20px;
+  }
+  .wzx_tech-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--wzx-accent);
+  }
+  .wzx_tech-title {
+    font-size: 0.82rem;
+    color: var(--wzx-text);
+    margin-top: 6px;
+  }
+  .wzx_tech-desc {
+    font-size: 0.75rem;
+    color: var(--wzx-text-dim);
+    margin-top: 4px;
+  }
+
+  /* 页脚 */
+  .wzx_footer {
+    border-top: 1px solid var(--wzx-border);
+    padding: 40px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--wzx-text-dim);
+  }
+
+  /* 入场 — 一次管弦化渐入 */
+  .wzx_hero, .wzx_feature-section, .wzx_section, .wzx_tech-bar {
+    opacity: 0;
+    animation: wzx_fade 1s ease .15s forwards;
+  }
+  @keyframes wzx_fade { to { opacity: 1; } }
+
+  /* 响应式 */
+  @media (max-width: 640px) {
+    .wzx_nav { padding: 24px; }
+    .wzx_nav-links { gap: 18px; font-size: 0.72rem; }
+    .wzx_nav-brand { letter-spacing: 2px; font-size: 0.8rem; }
+    .wzx_hero { padding: 56px 24px 48px; }
+    .wzx_hero h1 { font-size: 2.6rem; }
+    .wzx_hero-meta-row { gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+    .wzx_feature-section { padding: 0 24px 48px; }
+    .wzx_feature-row { grid-template-columns: 1fr; }
+    .wzx_feature { padding: 48px 24px; }
+    .wzx_section { padding: 0 24px 64px; }
+    .wzx_lucide-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+    .wzx_tech-bar { grid-template-columns: repeat(2, 1fr); padding: 32px 24px; }
+    .wzx_footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="wzx_nav">
+  <div class="wzx_nav-brand">LUCIDE · SVG</div>
+  <div class="wzx_nav-links">
+    <a href="index.html">首页</a>
+    <a href="iconfont-1.html">Font Awesome</a>
+    <a href="inconfont-2.html" class="wzx_active">Lucide</a>
+  </div>
+</nav>
+
+<header class="wzx_hero">
+  <div class="wzx_hero-line"></div>
+  <h1>极简线条 <em>的诗意</em></h1>
+  <p class="wzx_hero-sub">Lucide 源自 Feather Icons 的开源延续，以统一的 24×24 网格和 1.5px 描边构建其视觉语法。没有填充，只有线条与留白。</p>
+  <div class="wzx_hero-meta-row">
+    <div>
+      <div class="wzx_meta-label">图标数</div>
+      <div class="wzx_meta-value">1500+</div>
+    </div>
+    <div>
+      <div class="wzx_meta-label">格式</div>
+      <div class="wzx_meta-value">纯 SVG</div>
+    </div>
+    <div>
+      <div class="wzx_meta-label">协议</div>
+      <div class="wzx_meta-value">ISC License</div>
+    </div>
+  </div>
+</header>
+
+<!-- 大幅展示区 -->
+<section class="wzx_feature-section">
+  <div class="wzx_feature-row">
+    <div class="wzx_feature">
+      <i data-lucide="compass"></i>
+      <div class="wzx_feature-name">Compass</div>
+      <div class="wzx_feature-desc">方向感</div>
+    </div>
+    <div class="wzx_feature">
+      <i data-lucide="feather"></i>
+      <div class="wzx_feature-name">Feather</div>
+      <div class="wzx_feature-desc">轻盈如羽</div>
+    </div>
+    <div class="wzx_feature">
+      <i data-lucide="sparkles"></i>
+      <div class="wzx_feature-name">Sparkles</div>
+      <div class="wzx_feature-desc">闪耀瞬间</div>
+    </div>
+  </div>
+  <div class="wzx_feature-row">
+    <div class="wzx_feature">
+      <i data-lucide="sun"></i>
+      <div class="wzx_feature-name">Sun</div>
+      <div class="wzx_feature-desc">白昼能量</div>
+    </div>
+    <div class="wzx_feature">
+      <i data-lucide="moon"></i>
+      <div class="wzx_feature-name">Moon</div>
+      <div class="wzx_feature-desc">夜间静谧</div>
+    </div>
+    <div class="wzx_feature">
+      <i data-lucide="cloud"></i>
+      <div class="wzx_feature-name">Cloud</div>
+      <div class="wzx_feature-desc">浮动形态</div>
+    </div>
+  </div>
+</section>
+
+<!-- 精选网格 -->
+<section class="wzx_section">
+  <div class="wzx_section-label">Selected Works</div>
+  <h2 class="wzx_section-title">一组 <em>日常</em> 的图标</h2>
+  <div class="wzx_lucide-grid">
+    <div class="wzx_lucide-tile"><i data-lucide="home"></i><div class="wzx_lucide-name">home</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="search"></i><div class="wzx_lucide-name">search</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="user"></i><div class="wzx_lucide-name">user</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="heart"></i><div class="wzx_lucide-name">heart</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="star"></i><div class="wzx_lucide-name">star</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="settings"></i><div class="wzx_lucide-name">settings</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="bell"></i><div class="wzx_lucide-name">bell</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="mail"></i><div class="wzx_lucide-name">mail</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="calendar"></i><div class="wzx_lucide-name">calendar</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="lock"></i><div class="wzx_lucide-name">lock</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="camera"></i><div class="wzx_lucide-name">camera</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="music"></i><div class="wzx_lucide-name">music</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="map-pin"></i><div class="wzx_lucide-name">map-pin</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="gift"></i><div class="wzx_lucide-name">gift</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="thumbs-up"></i><div class="wzx_lucide-name">thumbs-up</div></div>
+    <div class="wzx_lucide-tile"><i data-lucide="rss"></i><div class="wzx_lucide-name">rss</div></div>
+  </div>
+</section>
+
+<!-- 技术说明 -->
+<section class="wzx_tech-bar">
+  <div class="wzx_tech-item">
+    <div class="wzx_tech-num">24×24</div>
+    <div class="wzx_tech-title">统一网格</div>
+    <div class="wzx_tech-desc">全部图标基于同一画布</div>
+  </div>
+  <div class="wzx_tech-item">
+    <div class="wzx_tech-num">1.5px</div>
+    <div class="wzx_tech-title">标准描边</div>
+    <div class="wzx_tech-desc">保持视觉一致性</div>
+  </div>
+  <div class="wzx_tech-item">
+    <div class="wzx_tech-num">0.625rem</div>
+    <div class="wzx_tech-title">转角半径</div>
+    <div class="wzx_tech-desc">柔化但不模糊</div>
+  </div>
+  <div class="wzx_tech-item">
+    <div class="wzx_tech-num">SVG</div>
+    <div class="wzx_tech-title">矢量格式</div>
+    <div class="wzx_tech-desc">无损缩放任意尺寸</div>
+  </div>
+</section>
+
+<footer class="wzx_footer">
+  <div>Lucide Icons · ISC License</div>
+  <div>Local copy · wzxczy / cdn / lucide</div>
+</footer>
+
+<script src="cdn/lucide/lucide.min.js"></script>
+<script>
+  // wzx_ 前缀的全局调用
+  window.addEventListener('DOMContentLoaded', function() {
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  });
+</script>
+</body>
+</html>

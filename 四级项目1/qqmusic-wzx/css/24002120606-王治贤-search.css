@@ -1,0 +1,60 @@
+/* 姓名：王治贤 学号：24002120606 搜索页样式 */
+.wzx-search-box {
+    position: relative;
+}
+.wzx-search-box .iconfont {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #9aa0b5;
+    pointer-events: none;
+}
+.wzx-search-input {
+    width: 100%;
+    padding: 13px 13px 13px 36px;
+    border-radius: 8px;
+    border: none;
+    background: #16162c;
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+.wzx-search-input:focus {
+    outline: 1px solid #6388ff;
+}
+.wzx-suggest {
+    background: #16162c;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+.wzx-suggest div {
+    padding: 12px;
+    border-bottom: 1px solid #222244;
+    font-size: 14px;
+    cursor: pointer;
+    color: #e6e8f5;
+}
+.wzx-suggest div:last-child {
+    border-bottom: none;
+}
+.wzx-hot-title {
+    font-size: 15px;
+    color: #9aa0b5;
+    margin: 8px 0 10px;
+}
+.wzx-hot-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.wzx-hot-word {
+    background: #16162c;
+    padding: 8px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #c6ccff;
+}

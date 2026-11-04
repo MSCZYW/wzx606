@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Font Awesome · 图标画廊</title>
+<link rel="stylesheet" href="cdn/fontawesome/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wzx-bg: #1A1625;
+    --wzx-surface: #242040;
+    --wzx-surface-2: #2E2950;
+    --wzx-accent: #F5D000;
+    --wzx-accent-2: #00E5B0;
+    --wzx-text: #F2EADF;
+    --wzx-text-dim: #8A84A0;
+    --wzx-border: #3A3560;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--wzx-bg);
+    color: var(--wzx-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--wzx-accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* 顶部导航 */
+  .wzx_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 48px;
+    border-bottom: 1px solid var(--wzx-border);
+  }
+  .wzx_nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--wzx-accent);
+    letter-spacing: 0.5px;
+  }
+  .wzx_nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 0.85rem;
+    color: var(--wzx-text-dim);
+  }
+  .wzx_nav-links a { color: var(--wzx-text-dim); transition: color .2s; }
+  .wzx_nav-links a:hover { color: var(--wzx-accent-2); text-decoration: none; }
+  .wzx_nav-links a.wzx_active { color: var(--wzx-accent); }
+
+  /* Hero */
+  .wzx_hero {
+    padding: 72px 48px 56px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .wzx_hero-meta {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--wzx-text-dim);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .wzx_hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 3.6rem;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .wzx_hero h1 em {
+    font-style: italic;
+    color: var(--wzx-accent);
+    font-weight: 400;
+  }
+  .wzx_hero-desc {
+    margin-top: 20px;
+    max-width: 620px;
+    color: var(--wzx-text-dim);
+    font-size: 0.95rem;
+  }
+  .wzx_hero-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--wzx-border);
+  }
+  .wzx_stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--wzx-accent);
+    line-height: 1;
+  }
+  .wzx_stat-label {
+    font-size: 0.8rem;
+    color: var(--wzx-text-dim);
+    margin-top: 6px;
+  }
+
+  /* 分类标题 */
+  .wzx_section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px 64px;
+  }
+  .wzx_section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--wzx-accent);
+  }
+  .wzx_section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .wzx_section-count {
+    font-size: 0.8rem;
+    color: var(--wzx-text-dim);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+
+  /* 图标网格 */
+  .wzx_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 2px;
+  }
+  .wzx_icon-tile {
+    background: var(--wzx-surface);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background .25s ease, transform .25s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+  }
+  .wzx_icon-tile:hover {
+    background: var(--wzx-surface-2);
+    border-color: var(--wzx-accent);
+    transform: translateY(-2px);
+  }
+  .wzx_icon-tile i {
+    font-size: 2rem;
+    color: var(--wzx-text);
+    transition: color .25s ease, transform .25s ease;
+  }
+  .wzx_icon-tile:hover i {
+    color: var(--wzx-accent);
+    transform: scale(1.1);
+  }
+  .wzx_icon-name {
+    font-size: 0.62rem;
+    color: var(--wzx-text-dim);
+    text-align: center;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+  }
+  .wzx_icon-tile.wzx_brands i { color: var(--wzx-accent-2); }
+  .wzx_icon-tile.wzx_brands:hover i { color: var(--wzx-accent); }
+
+  /* 页脚 */
+  .wzx_footer {
+    border-top: 1px solid var(--wzx-border);
+    padding: 32px 48px;
+    text-align: center;
+    color: var(--wzx-text-dim);
+    font-size: 0.8rem;
+  }
+
+  /* 入场动画 — 单一管弦化渐入 */
+  .wzx_hero, .wzx_section { opacity: 0; animation: wzx_fadeIn .9s ease .1s forwards; }
+  @keyframes wzx_fadeIn { to { opacity: 1; } }
+
+  /* 移动端 */
+  @media (max-width: 640px) {
+    .wzx_nav { padding: 20px 24px; }
+    .wzx_nav-links { gap: 16px; font-size: 0.75rem; }
+    .wzx_hero { padding: 48px 24px 32px; }
+    .wzx_hero h1 { font-size: 2.4rem; }
+    .wzx_hero-stats { gap: 24px; }
+    .wzx_stat-num { font-size: 1.8rem; }
+    .wzx_section { padding: 0 24px 48px; }
+    .wzx_grid { grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="wzx_nav">
+  <div class="wzx_nav-brand">Icon · Gallery</div>
+  <div class="wzx_nav-links">
+    <a href="index.html">首页</a>
+    <a href="iconfont-1.html" class="wzx_active">Font Awesome</a>
+    <a href="inconfont-2.html">Lucide</a>
+  </div>
+</nav>
+
+<header class="wzx_hero">
+  <div class="wzx_hero-meta">Collection · 01</div>
+  <h1>Font Awesome — <em>字体图标</em>的古典主义</h1>
+  <p class="wzx_hero-desc">一套跨越品牌、固态与常规三种风格的图标语言，以字体文件的方式被浏览器渲染，轻量且矢量化。这里展出了其中极具代表性的藏品。</p>
+  <div class="wzx_hero-stats">
+    <div>
+      <div class="wzx_stat-num">2000+</div>
+      <div class="wzx_stat-label">图标总量</div>
+    </div>
+    <div>
+      <div class="wzx_stat-num">3</div>
+      <div class="wzx_stat-label">风格家族</div>
+    </div>
+    <div>
+      <div class="wzx_stat-num">v6.5</div>
+      <div class="wzx_stat-label">当前版本</div>
+    </div>
+  </div>
+</header>
+
+<!-- Solid 风格 -->
+<section class="wzx_section">
+  <div class="wzx_section-header">
+    <div class="wzx_section-title">Solid · 厚重与明确</div>
+    <div class="wzx_section-count">精选 12 件</div>
+  </div>
+  <div class="wzx_grid">
+    <div class="wzx_icon-tile"><i class="fa-solid fa-house"></i><div class="wzx_icon-name">house</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-heart"></i><div class="wzx_icon-name">heart</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-star"></i><div class="wzx_icon-name">star</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-magnifying-glass"></i><div class="wzx_icon-name">magnifying-glass</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-user"></i><div class="wzx_icon-name">user</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-gear"></i><div class="wzx_icon-name">gear</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-bell"></i><div class="wzx_icon-name">bell</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-envelope"></i><div class="wzx_icon-name">envelope</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-calendar"></i><div class="wzx_icon-name">calendar</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-cart-shopping"></i><div class="wzx_icon-name">cart-shopping</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-lock"></i><div class="wzx_icon-name">lock</div></div>
+    <div class="wzx_icon-tile"><i class="fa-solid fa-cloud"></i><div class="wzx_icon-name">cloud</div></div>
+  </div>
+</section>
+
+<!-- Regular 风格 -->
+<section class="wzx_section">
+  <div class="wzx_section-header">
+    <div class="wzx_section-title">Regular · 留白与呼吸</div>
+    <div class="wzx_section-count">精选 10 件</div>
+  </div>
+  <div class="wzx_grid">
+    <div class="wzx_icon-tile"><i class="fa-regular fa-heart"></i><div class="wzx_icon-name">heart</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-star"></i><div class="wzx_icon-name">star</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-bookmark"></i><div class="wzx_icon-name">bookmark</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-comment"></i><div class="wzx_icon-name">comment</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-envelope"></i><div class="wzx_icon-name">envelope</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-calendar"></i><div class="wzx_icon-name">calendar</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-file"></i><div class="wzx_icon-name">file</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-image"></i><div class="wzx_icon-name">image</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-circle"></i><div class="wzx_icon-name">circle</div></div>
+    <div class="wzx_icon-tile"><i class="fa-regular fa-square"></i><div class="wzx_icon-name">square</div></div>
+  </div>
+</section>
+
+<!-- Brands 风格 -->
+<section class="wzx_section">
+  <div class="wzx_section-header">
+    <div class="wzx_section-title">Brands · 品牌的签名</div>
+    <div class="wzx_section-count">精选 10 件</div>
+  </div>
+  <div class="wzx_grid">
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-github"></i><div class="wzx_icon-name">github</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-twitter"></i><div class="wzx_icon-name">twitter</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-instagram"></i><div class="wzx_icon-name">instagram</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-weixin"></i><div class="wzx_icon-name">weixin</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-weibo"></i><div class="wzx_icon-name">weibo</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-chrome"></i><div class="wzx_icon-name">chrome</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-firefox"></i><div class="wzx_icon-name">firefox</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-apple"></i><div class="wzx_icon-name">apple</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-windows"></i><div class="wzx_icon-name">windows</div></div>
+    <div class="wzx_icon-tile wzx_brands"><i class="fa-brands fa-python"></i><div class="wzx_icon-name">python</div></div>
+  </div>
+</section>
+
+<footer class="wzx_footer">
+  Font Awesome Free 6.5.2 · SIL OFL 1.1 — Fonts · MIT — Code · CC BY 4.0 — Icons
+</footer>
+
+</body>
+</html>
