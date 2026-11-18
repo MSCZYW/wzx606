@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+  作者：24002120606王治贤
+  建立时间：2026-11-18
+  使用大模型：Trae AI
+  功能名称：移动端手势滑动美食卡片切换页
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>移动端手势滑动 - 美食卡片</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background: #1c1c28;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .wzx_page-title {
+      color: #fff;
+      font-size: 22px;
+      margin-bottom: 24px;
+      letter-spacing: 2px;
+    }
+
+    /* 卡片容器：pan-y 保证纵向仍可滚动页面 */
+    .wzx_card-wrap {
+      width: 86%;
+      max-width: 360px;
+      height: 380px;
+      border-radius: 20px;
+      overflow: hidden;
+      touch-action: pan-y;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      position: relative;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* 单张美食卡片 */
+    .wzx_food-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0;
+      color: #fff;
+      text-align: center;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      will-change: transform, opacity;
+    }
+
+    .wzx_food-card.wzx_hidden {
+      opacity: 0;
+      transform: translateX(60px) scale(0.96);
+      pointer-events: none;
+    }
+
+    .wzx_food-card.wzx_exit-left {
+      opacity: 0;
+      transform: translateX(-60px) scale(0.96);
+    }
+
+    /* 卡片上半部分菜品实拍图 */
+    .wzx_food-img {
+      width: 100%;
+      height: 52%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .wzx_food-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 16px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .wzx_food-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.92;
+      padding: 0 22px;
+    }
+
+    /* 底部指示与提示 */
+    .wzx_indicator {
+      color: #aaa;
+      font-size: 15px;
+      margin-top: 22px;
+    }
+
+    .wzx_tip {
+      color: #ff9f43;
+      font-size: 13px;
+      height: 20px;
+      margin-top: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .wzx_tip.wzx_tip-show {
+      opacity: 1;
+    }
+
+    /* 操作说明 */
+    .wzx_hint {
+      color: #666;
+      font-size: 12px;
+      margin-top: 14px;
+    }
+
+    .wzx_back-link {
+      color: #5b8cff;
+      font-size: 14px;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="wzx_page-title">👆 手势滑动切换美食卡片</h1>
+
+  <div class="wzx_card-wrap" id="wzx_cardWrap">
+    <!-- 卡片由 JS 动态生成 -->
+  </div>
+
+  <p class="wzx_indicator" id="wzx_indicator">第 1/4 张</p>
+  <p class="wzx_tip" id="wzx_tip"></p>
+  <p class="wzx_hint">左右滑动卡片切换菜品</p>
+  <a class="wzx_back-link" href="index.html">返回首页</a>
+
+  <script>
+    // 美食数据：4 道菜，含菜名、简介、渐变背景、菜品图片
+    var wzx_foods = [
+      {
+        name: '麻婆豆腐',
+        desc: '川菜经典，麻辣鲜香，豆腐嫩滑，红油亮泽，一口下去满嘴生香。',
+        gradient: 'linear-gradient(135deg, #ff512f, #dd2476)',
+        img: 'images/wzx_dish_mapo.png'
+      },
+      {
+        name: '东坡肉',
+        desc: '江南名菜，肥而不腻，酥烂入味，色泽红亮，入口即化。',
+        gradient: 'linear-gradient(135deg, #f7971e, #ffd200)',
+        img: 'images/wzx_dish_dongpo.png'
+      },
+      {
+        name: '番茄牛腩',
+        desc: '番茄浓汤炖牛腩，酸甜开胃，牛肉软烂入味，汤汁拌饭一绝。',
+        gradient: 'linear-gradient(135deg, #eb3349, #f45c43)',
+        img: 'images/wzx_dish_fanqie.png'
+      },
+      {
+        name: '宫保鸡丁',
+        desc: '酸甜微辣，鸡丁滑嫩，花生酥脆，家常下饭的经典之选。',
+        gradient: 'linear-gradient(135deg, #7f00ff, #e100ff)',
+        img: 'images/wzx_dish_gongbao.png'
+      }
+    ];
+
+    var wzx_currentIndex = 0;          // 当前卡片索引
+    var wzx_startX = 0;                // touchstart 起始横坐标
+    var wzx_startY = 0;                // touchstart 起始纵坐标
+    var wzx_swipeLock = false;         // 300ms 冷却锁，防止快速连滑一次跳两张
+    var wzx_SWIPE_THRESHOLD = 40;      // 横向滑动生效阈值（px）
+
+    // 页面加载后立即渲染全部美食卡片
+    wzx_renderCards();
+
+    /**
+     * 渲染全部美食卡片到容器中，并显示当前索引对应的那一张
+     * 功能：遍历 wzx_foods 生成卡片元素，默认隐藏非当前卡片
+     */
+    function wzx_renderCards() {
+      var wrap = document.getElementById('wzx_cardWrap');
+      wrap.innerHTML = '';
+      wzx_foods.forEach(function (food, i) {
+        var card = document.createElement('div');
+        card.className = 'wzx_food-card' + (i === wzx_currentIndex ? '' : ' wzx_hidden');
+        card.style.background = food.gradient;
+        card.innerHTML =
+          '<img class="wzx_food-img" src="' + food.img + '" alt="' + food.name + '">' +
+          '<div class="wzx_food-name">' + food.name + '</div>' +
+          '<div class="wzx_food-desc">' + food.desc + '</div>';
+        wrap.appendChild(card);
+      });
+    }
+
+    // 更新底部“第 x/4 张”指示文字
+    function wzx_updateIndicator() {
+      document.getElementById('wzx_indicator').textContent =
+        '第 ' + (wzx_currentIndex + 1) + '/' + wzx_foods.length + ' 张';
+    }
+
+    // 显示边界提示文字（1.2s 后自动淡出）
+    function wzx_showTip(text) {
+      var tip = document.getElementById('wzx_tip');
+      tip.textContent = text;
+      tip.classList.add('wzx_tip-show');
+      clearTimeout(tip.wzx_timer);
+      tip.wzx_timer = setTimeout(function () {
+        tip.classList.remove('wzx_tip-show');
+      }, 1200);
+    }
+
+    /**
+     * 切换到指定索引的卡片，带 0.3s 过渡动画
+     * 功能：旧卡淡出、新卡淡入，并同步更新指示器
+     * @param {number} targetIndex - 目标卡片索引
+     * @param {string} direction - 滑动方向 'next' 或 'prev'
+     */
+    function wzx_switchCard(targetIndex, direction) {
+      var cards = document.querySelectorAll('.wzx_food-card');
+      var oldCard = cards[wzx_currentIndex];
+      var newCard = cards[targetIndex];
+
+      // 旧卡按滑动方向退场
+      oldCard.classList.remove('wzx_hidden');
+      oldCard.classList.add(direction === 'next' ? 'wzx_exit-left' : 'wzx_hidden');
+      // 新卡从对应方向进场
+      newCard.classList.remove('wzx_hidden');
+      newCard.style.transition = 'none';
+      newCard.style.transform = direction === 'next'
+        ? 'translateX(60px) scale(0.96)'
+        : 'translateX(-60px) scale(0.96)';
+      // 强制重绘后恢复过渡，形成平滑动画
+      void newCard.offsetWidth;
+      newCard.style.transition = '';
+      newCard.style.transform = '';
+
+      wzx_currentIndex = targetIndex;
+      wzx_updateIndicator();
+
+      // 300ms 冷却：期间忽略新的滑动请求
+      wzx_swipeLock = true;
+      setTimeout(function () {
+        wzx_swipeLock = false;
+      }, 300);
+    }
+
+    // 监听手指按下，记录起始坐标
+    document.getElementById('wzx_cardWrap').addEventListener('touchstart', function (e) {
+      wzx_startX = e.changedTouches[0].clientX;
+      wzx_startY = e.changedTouches[0].clientY;
+    });
+
+    // 监听手指抬起，计算横向位移并判断滑动方向
+    document.getElementById('wzx_cardWrap').addEventListener('touchend', function (e) {
+      if (wzx_swipeLock) return; // 冷却中忽略，防止一次跳两张
+
+      var dx = e.changedTouches[0].clientX - wzx_startX;
+      var dy = e.changedTouches[0].clientY - wzx_startY;
+
+      // 横向位移超过阈值且明显大于纵向位移才判定为滑动
+      if (Math.abs(dx) < wzx_SWIPE_THRESHOLD || Math.abs(dx) < Math.abs(dy)) return;
+
+      if (dx < 0) {
+        // 左滑 → 下一张
+        if (wzx_currentIndex < wzx_foods.length - 1) {
+          wzx_switchCard(wzx_currentIndex + 1, 'next');
+        } else {
+          wzx_showTip('已经是最后一张');
+        }
+      } else {
+        // 右滑 → 上一张
+        if (wzx_currentIndex > 0) {
+          wzx_switchCard(wzx_currentIndex - 1, 'prev');
+        } else {
+          wzx_showTip('已经是第一张');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--
+  作者：24002120606王治贤
+  建立时间：2026-11-18
+  使用大模型：Trae AI
+  功能名称：移动端摇一摇抽菜谱（devicemotion 传感器 + 按钮降级方案）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>摇一摇 - 抽今日菜谱</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background: linear-gradient(160deg, #1d2635, #10131c);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .wzx_page-title {
+      color: #fff;
+      font-size: 22px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .wzx_sub-tip {
+      color: #9fb3d1;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    /* 结果展示卡片 */
+    .wzx_result-card {
+      width: 84%;
+      max-width: 320px;
+      padding: 30px 24px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #2b3a55, #3b2f5e);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wzx_dish-emoji {
+      font-size: 46px;
+      margin-bottom: 12px;
+    }
+
+    .wzx_dish-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .wzx_dish-desc {
+      font-size: 13px;
+      color: #c9d6ee;
+      line-height: 1.7;
+    }
+
+    /* 弹出动画：摇中菜谱时卡片缩放弹出 */
+    .wzx_result-card.wzx_pop {
+      animation: wzxPop 0.45s ease;
+    }
+
+    @keyframes wzxPop {
+      0%   { transform: scale(0.6); opacity: 0; }
+      60%  { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* 不支持提示 + 降级按钮 */
+    .wzx_unsupported {
+      color: #ff9f43;
+      font-size: 14px;
+      margin-top: 24px;
+      display: none;
+    }
+
+    .wzx_fallback-btn {
+      display: none;
+      margin-top: 14px;
+      padding: 10px 30px;
+      font-size: 15px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+    }
+
+    .wzx_fallback-btn:active {
+      transform: scale(0.95);
+    }
+
+    .wzx_back-link {
+      color: #5b8cff;
+      font-size: 14px;
+      margin-top: 26px;
+      text-decoration: none;
+    }
+
+    /* 降级原因说明区 */
+    .wzx_note {
+      width: 88%;
+      max-width: 380px;
+      margin-top: 22px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #8fa3c2;
+      font-size: 12px;
+      line-height: 1.9;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="wzx_page-title">📱 摇一摇</h1>
+  <p class="wzx_sub-tip">摇一摇手机，抽今日菜谱</p>
+
+  <div class="wzx_result-card" id="wzx_resultCard">
+    <div class="wzx_dish-emoji" id="wzx_dishEmoji">🍽️</div>
+    <div class="wzx_dish-name" id="wzx_dishName">等待摇动...</div>
+    <div class="wzx_dish-desc" id="wzx_dishDesc">拿起手机摇一摇，菜谱随机出炉</div>
+  </div>
+
+  <p class="wzx_unsupported" id="wzx_unsupported">当前设备不支持，请用手机打开</p>
+  <button class="wzx_fallback-btn" id="wzxFallbackBtn">点我抽一次</button>
+
+  <div class="wzx_note">
+    <b>为什么必须做降级？</b><br>
+    devicemotion 事件依赖设备物理陀螺仪/加速度传感器，台式机、部分笔记本和模拟器上根本不会触发，或返回全 0 数据；此外 iOS Safari 自 13 起要求用户主动授权（DeviceMotionEvent.requestPermission），未授权时同样拿不到数据。如果只写传感器逻辑，这些环境下页面会永远"等待摇动"，功能彻底失效。所以必须检测"事件不触发/数据无效"并退化为按钮点击方案，保证任何设备上核心功能（抽菜谱）都可用。
+  </div>
+
+  <a class="wzx_back-link" href="index.html">返回首页</a>
+
+  <script>
+    // ===== 菜谱数据 =====
+    var wzx_dishes = [
+      { name: '红烧排骨', emoji: '🍖', desc: '色泽红亮，咸甜适口，肉质软烂脱骨。' },
+      { name: '番茄炒蛋', emoji: '🍅', desc: '国民家常菜，酸甜开胃，十分钟搞定。' },
+      { name: '清炒时蔬', emoji: '🥬', desc: '爽脆清淡，解腻刮油，营养不缺席。' },
+      { name: '可乐鸡翅', emoji: '🍗', desc: '甜香浓郁，做法简单，大人孩子都爱吃。' },
+      { name: '酸辣土豆丝', emoji: '🥔', desc: '酸辣脆爽，下饭神器，越吃越上瘾。' },
+      { name: '冬瓜排骨汤', emoji: '🍲', desc: '汤清味鲜，清热去火，饭前一碗正合适。' },
+      { name: '麻婆豆腐', emoji: '🌶️', desc: '麻辣鲜香，豆腐嫩滑，米饭杀手。' },
+      { name: '蒜蓉大虾', emoji: '🦐', desc: '蒜香扑鼻，虾肉Q弹，宴客也有面。' }
+    ];
+
+    var wzx_shakeThreshold = 18;      // 摇动判定阈值（合成加速度 m/s²）
+    var wzx_coolDownMs = 1500;        // 触发后的冷却时间，防止一次摇动重复触发
+    var wzx_canShake = true;          // 冷却开关：true 表示当前允许触发
+    var wzx_sensorOk = false;         // 是否收到过有效的传感器数据
+    var wzx_checkTimer = null;        // 兜底检测定时器
+
+    /**
+     * 随机抽取一道菜并渲染到结果卡片，带弹出动画
+     * 功能：随机取 wzx_dishes 中一项，更新卡片内容并重放 wzx_pop 动画
+     */
+    function wzx_drawDish() {
+      var dish = wzx_dishes[Math.floor(Math.random() * wzx_dishes.length)];
+      var card = document.getElementById('wzx_resultCard');
+      document.getElementById('wzx_dishEmoji').textContent = dish.emoji;
+      document.getElementById('wzx_dishName').textContent = dish.name;
+      document.getElementById('wzx_dishDesc').textContent = dish.desc;
+
+      // 先移除动画类，强制重绘后再加回，保证每次都能重新弹出
+      card.classList.remove('wzx_pop');
+      void card.offsetWidth;
+      card.classList.add('wzx_pop');
+    }
+
+    /**
+     * 摇动触发的统一入口（传感器与降级按钮共用）
+     * 功能：冷却期内直接忽略；否则抽菜并开启 1.5s 冷却
+     */
+    function wzx_triggerShake() {
+      if (!wzx_canShake) return;    // 冷却中，忽略本次触发
+      wzx_canShake = false;
+      wzx_drawDish();
+      setTimeout(function () {
+        wzx_canShake = true;        // 冷却结束，恢复可触发
+      }, wzx_coolDownMs);
+    }
+
+    /**
+     * 显示"设备不支持"提示并展示降级按钮
+     * 功能：隐藏传感器专属提示，显示不支持文案与"点我抽一次"按钮
+     */
+    function wzx_showFallback() {
+      document.getElementById('wzx_unsupported').style.display = 'block';
+      document.getElementById('wzxFallbackBtn').style.display = 'inline-block';
+      document.querySelector('.wzx_sub-tip').textContent = '点击下方按钮抽取今日菜谱';
+    }
+
+    // 监听设备运动事件：取 accelerationIncludingGravity 计算合成加速度
+    window.addEventListener('devicemotion', function (e) {
+      var acc = e.accelerationIncludingGravity;
+      if (!acc || (acc.x === null && acc.y === null && acc.z === null)) return;
+
+      // 收到有效数据，标记传感器可用（兜底检测不再触发降级提示）
+      wzx_sensorOk = true;
+
+      // 合成加速度 = 三轴分量平方和开根号，摇动时数值会瞬间飙升
+      var total = Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+
+      if (total > wzx_shakeThreshold) {
+        wzx_triggerShake(); // 内部自带冷却判定
+      }
+    });
+
+    // 降级按钮：点击等价于一次摇动
+    document.getElementById('wzxFallbackBtn').addEventListener('click', wzx_triggerShake);
+
+    // 兜底检测：3 秒内没收到任何有效传感器数据，则判定环境不支持，启用降级方案
+    wzx_checkTimer = setTimeout(function () {
+      if (!wzx_sensorOk) {
+        wzx_showFallback();
+      }
+    }, 3000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--
+  作者：24002120606王治贤
+  建立时间：2026-11-18
+  使用大模型：Trae AI
+  功能名称：移动端图片查看器（双指缩放/单指拖动/双击切换）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>移动端图片查看器 - 双指缩放</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background: #14141f;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .wzx_page-title {
+      color: #fff;
+      font-size: 20px;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+    }
+
+    /* 打开时的提示条：双指缩放请用手机打开 */
+    .wzx_open-tip {
+      color: #ff9f43;
+      background: rgba(255, 159, 67, 0.12);
+      border: 1px solid rgba(255, 159, 67, 0.4);
+      border-radius: 8px;
+      font-size: 13px;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+    }
+
+    /* 图片查看容器：禁止溢出显示、禁用浏览器默认手势与文字选中 */
+    .wzx_viewer {
+      width: 92%;
+      max-width: 380px;
+      /* 高度由 aspect-ratio 自动适配图片比例（1:1 正方形菜品图），1x 时图片刚好铺满、无黑边 */
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      border-radius: 14px;
+      background: #000;
+      position: relative;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 大图：transform-origin 固定为左上角，位移/缩放全部由 JS 计算控制 */
+    .wzx_img {
+      width: 100%;
+      display: block;
+      transform-origin: 0 0;
+      /* 拖拽/捏合期间不允许过渡（否则跟手会滞后），双击切换时由 JS 开启 */
+    }
+
+    .wzx_img.wzx_transition {
+      transition: transform 0.25s ease;
+    }
+
+    .wzx_scale-bar {
+      color: #8be9fd;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    .wzx_hint {
+      color: #666;
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .wzx_back-link {
+      color: #5b8cff;
+      font-size: 14px;
+      margin-top: 16px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="wzx_page-title">🔍 图片查看器</h1>
+  <p class="wzx_open-tip">双指缩放请用手机打开</p>
+
+  <div class="wzx_viewer" id="wzx_viewer">
+    <img class="wzx_img" id="wzx_img"
+         src="images/wzx_dish_dongpo.png"
+         alt="美食大图" draggable="false">
+  </div>
+
+  <p class="wzx_scale-bar" id="wzx_scaleBar">当前缩放：1.0x</p>
+  <p class="wzx_hint">双指捏合缩放 · 单指拖动 · 双击 1x/2x 切换</p>
+  <a class="wzx_back-link" href="index.html">返回首页</a>
+
+  <script>
+    // ===== DOM 与核心状态变量 =====
+    var wzx_viewer = document.getElementById('wzx_viewer');
+    var wzx_img = document.getElementById('wzx_img');
+    var wzx_scaleBar = document.getElementById('wzx_scaleBar');
+
+    var wzx_scale = 1;              // 当前缩放倍数（1 ~ 4）
+    var wzx_offsetX = 0;            // 图片当前横向位移（px）
+    var wzx_offsetY = 0;            // 图片当前纵向位移（px）
+    var wzx_startDist = 0;          // 双指 touchstart 时的初始间距
+    var wzx_startScale = 1;         // 双指 touchstart 时的初始缩放倍数
+    var wzx_anchorX = 0;            // 缩放锚点在"图片坐标系"中的 x（关键：缩放不跳的核心）
+    var wzx_anchorY = 0;            // 缩放锚点在"图片坐标系"中的 y
+    var wzx_lastTouchX = 0;         // 单指拖动上一次触点 x
+    var wzx_lastTouchY = 0;         // 单指拖动上一次触点 y
+    var wzx_lastTapTime = 0;        // 上一次 tap 时间，用于双击判定
+    var wzx_lastTapX = 0;           // 上一次 tap 位置 x（判定是否为同一点双击）
+    var wzx_lastTapY = 0;           // 上一次 tap 位置 y
+    var MIN_SCALE = 1;              // 最小缩放
+    var MAX_SCALE = 4;              // 最大缩放
+    var DBL_TAP_GAP = 300;          // 双击判定时间间隔（ms）
+    var DBL_TAP_MOVE = 30;          // 双击判定允许的位移（px）
+
+    /**
+     * 将位移与缩放应用到图片 transform 上
+     * 功能：统一渲染入口，transform 顺序为"先平移后缩放"，配合 origin 0 0
+     */
+    function wzx_applyTransform() {
+      wzx_img.style.transform =
+        'translate(' + wzx_offsetX + 'px, ' + wzx_offsetY + 'px) scale(' + wzx_scale + ')';
+      wzx_scaleBar.textContent = '当前缩放：' + wzx_scale.toFixed(1) + 'x';
+    }
+
+    /**
+     * 松手 / 缩放过程中把图片位置收敛到合法边界内
+     * 功能：scale=1 时强制归位；scale>1 时保证图片铺满容器不留白边
+     */
+    function wzx_clampPosition() {
+      var boxW = wzx_viewer.clientWidth;
+      var boxH = wzx_viewer.clientHeight;
+      var imgW = wzx_img.offsetWidth * wzx_scale;   // 缩放后实际显示宽度
+      var imgH = wzx_img.offsetHeight * wzx_scale;
+
+      if (wzx_scale <= MIN_SCALE + 0.001) {
+        // 缩到最小时必须完全归位，避免残留偏移
+        wzx_scale = MIN_SCALE;
+        wzx_offsetX = 0;
+        wzx_offsetY = 0;
+      } else {
+        // x 允许范围：[boxW - imgW, 0]，超出则拉回
+        wzx_offsetX = Math.min(0, Math.max(boxW - imgW, wzx_offsetX));
+        // y 允许范围：[boxH - imgH, 0]
+        wzx_offsetY = Math.min(0, Math.max(boxH - imgH, wzx_offsetY));
+      }
+      wzx_applyTransform();
+    }
+
+    /**
+     * 把容器坐标点换算为"图片坐标系"中的点
+     * 功能：逆变换 imgPoint = (containerPoint - offset) / scale，是锚点法的基础
+     * @param {number} px - 容器内 x
+     * @param {number} py - 容器内 y
+     */
+    function wzx_toImagePoint(px, py) {
+      return {
+        x: (px - wzx_offsetX) / wzx_scale,
+        y: (py - wzx_offsetY) / wzx_scale
+      };
+    }
+
+    // ===== touchstart：记录单指 / 双指状态 =====
+    wzx_viewer.addEventListener('touchstart', function (e) {
+      // 捏合/拖动期间关闭过渡动画，保证严格跟手
+      wzx_img.classList.remove('wzx_transition');
+
+      if (e.touches.length === 2) {
+        // 双指：记录初始间距与当前 scale，作为整段手势的固定基准
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        wzx_startDist = Math.sqrt(dx * dx + dy * dy);
+        wzx_startScale = wzx_scale;
+
+        // 记录两指中点，并换算成图片坐标锚点（缩放基准点）
+        var midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - wzx_viewer.getBoundingClientRect().left;
+        var midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - wzx_viewer.getBoundingClientRect().top;
+        var anchor = wzx_toImagePoint(midX, midY);
+        wzx_anchorX = anchor.x;
+        wzx_anchorY = anchor.y;
+      } else if (e.touches.length === 1) {
+        // 单指：记录拖动起点
+        wzx_lastTouchX = e.touches[0].clientX;
+        wzx_lastTouchY = e.touches[0].clientY;
+      }
+    });
+
+    // ===== touchmove：双指缩放 / 单指拖动 =====
+    wzx_viewer.addEventListener('touchmove', function (e) {
+      e.preventDefault(); // touch-action:none 之外再兜底，阻止页面滚动/浏览器缩放
+
+      if (e.touches.length === 2 && wzx_startDist > 0) {
+        // —— 双指缩放 ——
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        var nowDist = Math.sqrt(dx * dx + dy * dy);
+
+        // 用"当前距离 / 初始距离"的比例乘以手势开始时的 scale，
+        // 而不是在上一帧 scale 上累加 —— 避免误差累积导致跳变
+        var newScale = wzx_startScale * (nowDist / wzx_startDist);
+        wzx_scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, newScale));
+
+        // 实时计算两指中点（手指移动时中点也在动，天然带出"边捏合边平移"）
+        var rect = wzx_viewer.getBoundingClientRect();
+        var midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        var midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+
+        // 锚点法：让手势开始时中点压住的图像点，始终钉在当前中点下方
+        // offset = mid - imgPoint * scale
+        wzx_offsetX = midX - wzx_anchorX * wzx_scale;
+        wzx_offsetY = midY - wzx_anchorY * wzx_scale;
+
+        wzx_applyTransform();
+      } else if (e.touches.length === 1 && wzx_scale > MIN_SCALE) {
+        // —— 单指拖动（仅放大后才允许）——
+        var t = e.touches[0];
+        wzx_offsetX += t.clientX - wzx_lastTouchX;
+        wzx_offsetY += t.clientY - wzx_lastTouchY;
+        wzx_lastTouchX = t.clientX;
+        wzx_lastTouchY = t.clientY;
+        wzx_applyTransform();
+      }
+    }, { passive: false });
+
+    // ===== touchend：手势结束处理 =====
+    wzx_viewer.addEventListener('touchend', function (e) {
+      // 手指从 2 根变 1 根：旧的双指基准已失效，必须重置基准，
+      // 否则剩余手指下一帧 move 会用旧 startDist 计算，画面瞬间跳变
+      if (e.touches.length === 1) {
+        wzx_startDist = 0;
+        wzx_lastTouchX = e.touches[0].clientX;
+        wzx_lastTouchY = e.touches[0].clientY;
+      }
+      // 全部手指抬起：收敛边界 + 判定双击
+      if (e.touches.length === 0) {
+        wzx_startDist = 0;
+        wzx_clampPosition();
+
+        // 双击判定：两次 tap 间隔 < 300ms 且位移很小
+        var now = Date.now();
+        var t = e.changedTouches[0];
+        if (now - wzx_lastTapTime < DBL_TAP_GAP &&
+            Math.abs(t.clientX - wzx_lastTapX) < DBL_TAP_MOVE &&
+            Math.abs(t.clientY - wzx_lastTapY) < DBL_TAP_MOVE) {
+          wzx_handleDoubleTap();
+          wzx_lastTapTime = 0; // 防止三连击误触发两次切换
+        } else {
+          wzx_lastTapTime = now;
+          wzx_lastTapX = t.clientX;
+          wzx_lastTapY = t.clientY;
+        }
+      }
+    });
+
+    /**
+     * 双击在 1x 与 2x 之间切换，带 0.25s 过渡动画
+     * 功能：放大时以容器中心为基准；缩回 1x 时完全归位
+     */
+    function wzx_handleDoubleTap() {
+      // 双击切换走过渡动画，拖拽/捏合结束后再手动移除
+      wzx_img.classList.add('wzx_transition');
+      if (wzx_scale > MIN_SCALE + 0.001) {
+        // 当前是放大状态 → 切回 1x 并归位
+        wzx_scale = MIN_SCALE;
+        wzx_offsetX = 0;
+        wzx_offsetY = 0;
+      } else {
+        // 1x → 2x，以容器中心为缩放基准
+        wzx_scale = 2;
+        var boxW = wzx_viewer.clientWidth;
+        var boxH = wzx_viewer.clientHeight;
+        var anchor = wzx_toImagePoint(boxW / 2, boxH / 2);
+        wzx_offsetX = boxW / 2 - anchor.x * wzx_scale;
+        wzx_offsetY = boxH / 2 - anchor.y * wzx_scale;
+        wzx_clampPosition();
+      }
+      wzx_applyTransform();
+    }
+  </script>
+</body>
+</html>
