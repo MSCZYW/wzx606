@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+  作者：王治贤
+  建立时间：2026-11-13
+  使用大模型：Trae AI
+  功能名称：诗词展示页（上图下文，数据来自本地服务器 db.json）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>诗词展示</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    /* 卡片容器：弹性布局，自动换行 */
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* 单个卡片：上图下文结构 */
+    .card {
+      width: 260px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .card-info {
+      padding: 14px;
+    }
+    .card-info h3 {
+      font-size: 17px;
+      color: #222;
+      margin-bottom: 8px;
+    }
+    .card-info p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+    /* 加载/错误提示 */
+    .tip {
+      text-align: center;
+      color: #888;
+      font-size: 16px;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>诗词展示</h1>
+  <!-- 卡片列表容器，数据由 JS 动态渲染 -->
+  <div class="list" id="list"></div>
+  <p class="tip" id="tip">正在加载数据...</p>
+
+  <script>
+    // 请求本地数据服务器，获取诗词数据并渲染上图下文的卡片列表
+    fetch('http://localhost:3004/db.json')
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var list = document.getElementById('list');
+        var tip = document.getElementById('tip');
+        tip.style.display = 'none';
+        // 遍历 poems 数组，生成卡片元素
+        data.poems.forEach(function (item) {
+          var card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML =
+            '<img src="' + item.pic + '" alt="' + item.title + '">' +
+            '<div class="card-info">' +
+              '<h3>' + item.title + '</h3>' +
+              '<p>' + item.content + '</p>' +
+            '</div>';
+          list.appendChild(card);
+        });
+      })
+      .catch(function () {
+        // 请求失败时给出提示（需先启动 db/server.js）
+        document.getElementById('tip').textContent = '数据加载失败，请先运行：node db/server.js';
+      });
+  </script>
+</body>
+</html>
