@@ -231,11 +231,12 @@
       var oldCard = cards[wzx_currentIndex];
       var newCard = cards[targetIndex];
 
+      // 先清除两张卡上可能残留的旧状态类（上次退场遗留的 wzx_exit-left 含 opacity:0，不清除会导致卡片再也显示不出来）
+      oldCard.classList.remove('wzx_hidden', 'wzx_exit-left');
+      newCard.classList.remove('wzx_hidden', 'wzx_exit-left');
       // 旧卡按滑动方向退场
-      oldCard.classList.remove('wzx_hidden');
       oldCard.classList.add(direction === 'next' ? 'wzx_exit-left' : 'wzx_hidden');
       // 新卡从对应方向进场
-      newCard.classList.remove('wzx_hidden');
       newCard.style.transition = 'none';
       newCard.style.transform = direction === 'next'
         ? 'translateX(60px) scale(0.96)'
