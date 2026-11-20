@@ -86,3 +86,14 @@ UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_08.svg' WHERE id = 8;
 UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_09.svg' WHERE id = 9;
 UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_10.svg' WHERE id = 10;
 
+## 2026-11-20 再次修正 wzx_gallery 图片：删除 SVG 封面，更换为写实风格 JPG 图片
+
+-- 说明：应要求更换为更贴近现实的图片。已用 AI 图片生成工具生成 10 张写实产品/场景照片，
+-- 保存为 frontend/images/wzx_gallery_01.jpg ~ wzx_gallery_10.jpg（4:3 横图），
+-- 原 10 张 SVG 封面已删除。以下 UPDATE 在 wzx_web 库中执行。
+
+USE wzx_web;
+
+UPDATE wzx_gallery SET img_url = REPLACE(img_url, '.svg', '.jpg') WHERE img_url LIKE '/images/wzx_gallery_%.svg';
+-- 执行后各条 img_url 为 /images/wzx_gallery_01.jpg ~ /images/wzx_gallery_10.jpg
+
