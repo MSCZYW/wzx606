@@ -1,0 +1,186 @@
+/*
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：首页样式，渐变背景 + 毛玻璃卡片 + 导航列表
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+  color: #eaf2ff;
+  background: linear-gradient(135deg, #1b2a4e 0%, #2b3f77 45%, #4a2f6b 100%);
+  overflow-x: hidden;
+}
+
+/* canvas 背景动画铺满全屏 */
+#wzx_canvas_bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+.wzx_page {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+}
+
+/* 头部标题 */
+.wzx_header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.wzx_title {
+  font-size: 44px;
+  letter-spacing: 10px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #9fd0ff, #e3c8ff, #ffd6e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(120, 160, 255, 0.35);
+}
+
+.wzx_subtitle {
+  margin-top: 12px;
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: rgba(223, 233, 255, 0.75);
+}
+
+/* 信息卡片（毛玻璃） */
+.wzx_info_card,
+.wzx_nav_card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 40px rgba(10, 18, 45, 0.35);
+}
+
+.wzx_info_card {
+  padding: 22px 28px;
+  margin-bottom: 28px;
+}
+
+.wzx_info_list {
+  list-style: none;
+}
+
+.wzx_info_list li {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+.wzx_info_list li:last-child {
+  border-bottom: none;
+}
+
+.wzx_info_label {
+  width: 90px;
+  color: rgba(214, 228, 255, 0.7);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+.wzx_info_value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.wzx_tag {
+  display: inline-block;
+  padding: 2px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  background: linear-gradient(90deg, rgba(120, 160, 255, 0.35), rgba(200, 140, 255, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* 导航卡片 */
+.wzx_nav_card {
+  padding: 24px 28px 28px;
+}
+
+.wzx_nav_title {
+  font-size: 18px;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  padding-left: 12px;
+  border-left: 4px solid #8fb6ff;
+}
+
+.wzx_nav_list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wzx_nav_link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #eaf2ff;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.wzx_nav_link:hover {
+  transform: translateX(6px);
+  background: rgba(143, 182, 255, 0.18);
+  border-color: rgba(143, 182, 255, 0.6);
+}
+
+.wzx_nav_icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.wzx_nav_text {
+  flex: 1;
+}
+
+.wzx_nav_arrow {
+  color: rgba(214, 228, 255, 0.6);
+}
+
+/* 页脚 */
+.wzx_footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(214, 228, 255, 0.5);
+}
+
+@media (max-width: 480px) {
+  .wzx_title {
+    font-size: 32px;
+    letter-spacing: 6px;
+  }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：项目首页，canvas 背景动画 + 页面导航
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拾光集市 - 高级网页设计课程作业</title>
+  <link rel="stylesheet" href="css/wzx_index.css">
+</head>
+<body>
+  <!-- canvas 背景动画 -->
+  <canvas id="wzx_canvas_bg"></canvas>
+
+  <div class="wzx_page">
+    <header class="wzx_header">
+      <h1 class="wzx_title">拾光集市</h1>
+      <p class="wzx_subtitle">高级网页设计课程作业 · 校园二手交易平台</p>
+    </header>
+
+    <section class="wzx_info_card">
+      <ul class="wzx_info_list">
+        <li><span class="wzx_info_label">姓　　名</span><span class="wzx_info_value">王治贤</span></li>
+        <li><span class="wzx_info_label">学　　号</span><span class="wzx_info_value">24002120606</span></li>
+        <li><span class="wzx_info_label">项目名称</span><span class="wzx_info_value">拾光集市（校园二手交易平台）</span></li>
+        <li><span class="wzx_info_label">项目类别</span><span class="wzx_info_value wzx_tag">自选</span></li>
+      </ul>
+    </section>
+
+    <main class="wzx_nav_card">
+      <h2 class="wzx_nav_title">页面导航</h2>
+      <nav class="wzx_nav_list">
+        <a class="wzx_nav_link" href="index.html">
+          <span class="wzx_nav_icon">⌂</span>
+          <span class="wzx_nav_text">首页</span>
+          <span class="wzx_nav_arrow">›</span>
+        </a>
+        <!-- 新完成的页面在此处追加超链接入口（文件名包含 detail 的页面除外） -->
+      </nav>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606</p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_index.js"></script>
+</body>
+</html>
