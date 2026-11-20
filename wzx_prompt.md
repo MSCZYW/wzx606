@@ -2,4 +2,4 @@
 
 ## 2026-11-20 | 模型：GLM-5.3-Flash (Trae AI)
 
-将 移动端交互.html 插到 index.html 里面，替代 mobile-gesture.html、mobile-sensor.html、mobile-zoom.html 三张入口卡片的位置（三个移动端页面合并为一个汇总页入口）
+将`d:/高级网页设计/wzxczy/移动端交互.html`中分别生成对应的卡片，并生成对应跳转页面的按钮（每个演示项改为卡片样式，内含标题、iframe 和"跳转页面"按钮）
