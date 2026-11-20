@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：科技新闻列表页，fetch 获取 /api/news 并渲染
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科技新闻 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_news.css">
+</head>
+<body>
+  <!-- canvas 背景动画 -->
+  <canvas id="wzx_canvas_bg"></canvas>
+
+  <div class="wzx_page">
+    <header class="wzx_header">
+      <h1 class="wzx_title">科技新闻</h1>
+      <p class="wzx_subtitle">最新科技资讯，按发布时间倒序展示</p>
+      <p class="wzx_api_bar">当前接口：<span id="wzx_api_url">GET /api/news</span></p>
+    </header>
+
+    <main class="wzx_news_list" id="wzx_news_list">
+      <p class="wzx_loading" id="wzx_loading">新闻加载中...</p>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606 · <a class="wzx_back_link" href="index.html">返回首页</a></p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_news.js"></script>
+</body>
+</html>

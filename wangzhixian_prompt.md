@@ -7,3 +7,5 @@
 2026-11-20 | 创建运行后台的 bat 文件，放在项目根目录：1、自动切换到 backend 目录再启动（用 %~dp0，双击时不受当前路径影响）；2、使用 chcp 65001 避免中文日志乱码；3、启动命令与 package.json 中的脚本保持一致；4、结尾加 pause，出错时窗口不关闭。 | 大模型：GLM-5.3-Flash
 
 2026-11-20 | 在 frontend/ 下创建 database.html：1、页面有用户名、密码两个输入框，默认用户名 root，密码默认 root，一个"测试连接"按钮；2、点击后调用后端接口 /api/db-test，把用户名密码发给后端；3、后端用 mysql2 尝试连接 MySQL，成功返回 { code:0, msg:"数据库连接成功", data:{ 数据库版本 } }，失败返回 code 非 0 和错误信息；4、前端把结果显示在页面上：成功用绿色，失败用红色，同时在控制台输出；5、数据库凭据从 backend/.env 读取，不要写死在代码里；6、完成后在 frontend/index.html 加上本页面的超链接入口。 | 大模型：GLM-5.3-Flash
+
+2026-11-20 | 完成科技新闻列表页面：1、在 MySQL 中建表 wzx_news，字段包含：id、title、summary、content、source、publish_time、cover_img；2、插入至少 8 条真实的科技新闻测试数据；3、后端提供 GET /api/news 接口，返回全部新闻（按发布时间倒序），统一 JSON 格式 { code, msg, data }；4、新建 frontend/news.html，页面顶部显示当前调用的接口地址，下方以列表展示新闻标题、摘要、来源、时间；5、数据用 fetch 获取，控制台输出返回数据；6、把建表与插入数据的 SQL 追加写入 backend/wzx_database.md，接口信息追加写入 backend/wzx_interface.md，本次提示词追加写入 wangzhixian_prompt.md；7、在 frontend/index.html 增加入口链接。 | 大模型：GLM-5.3-Flash

@@ -1,0 +1,164 @@
+/*
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：科技新闻列表页样式
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+  color: #eaf2ff;
+  background: linear-gradient(135deg, #1b2a4e 0%, #2b3f77 45%, #4a2f6b 100%);
+  overflow-x: hidden;
+}
+
+#wzx_canvas_bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+.wzx_page {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 24px 40px;
+}
+
+.wzx_header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.wzx_title {
+  font-size: 34px;
+  letter-spacing: 8px;
+  background: linear-gradient(90deg, #9fd0ff, #e3c8ff, #ffd6e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wzx_subtitle {
+  margin-top: 10px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: rgba(223, 233, 255, 0.75);
+}
+
+/* 接口地址展示条 */
+.wzx_api_bar {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #9fc3ff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgba(143, 182, 255, 0.5);
+  word-break: break-all;
+}
+
+.wzx_api_bar #wzx_api_url {
+  font-family: Consolas, monospace;
+  font-weight: 600;
+}
+
+/* 新闻列表 */
+.wzx_news_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wzx_loading,
+.wzx_empty {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 15px;
+  color: rgba(223, 233, 255, 0.65);
+}
+
+.wzx_news_item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(10, 18, 45, 0.3);
+  padding: 20px 24px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.wzx_news_item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(143, 182, 255, 0.55);
+}
+
+.wzx_news_title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.wzx_news_summary {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(223, 233, 255, 0.78);
+  margin-bottom: 14px;
+}
+
+.wzx_news_meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(214, 228, 255, 0.65);
+}
+
+.wzx_news_source {
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(79, 124, 255, 0.3), rgba(138, 92, 255, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #dce8ff;
+}
+
+.wzx_news_time {
+  font-family: Consolas, monospace;
+}
+
+.wzx_footer {
+  margin-top: 36px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(214, 228, 255, 0.5);
+}
+
+.wzx_back_link {
+  color: #9fc3ff;
+  text-decoration: none;
+}
+
+.wzx_back_link:hover {
+  text-decoration: underline;
+}
