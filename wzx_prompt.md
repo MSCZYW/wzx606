@@ -2,4 +2,4 @@
 
 ## 2026-11-20 | 模型：GLM-5.3-Flash (Trae AI)
 
-将任务四插入到`d:/高级网页设计/wzxczy/mobile-sensor.html`里面的下方（项目根目录存在 任务四视频.mp4，按视频插入处理）
+将 移动端交互.html 插到 index.html 里面，替代 mobile-gesture.html、mobile-sensor.html、mobile-zoom.html 三张入口卡片的位置（三个移动端页面合并为一个汇总页入口）
