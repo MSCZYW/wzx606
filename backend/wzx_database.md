@@ -67,3 +67,22 @@ INSERT INTO wzx_gallery (title, description, img_url, category, create_time) VAL
 ('篮球耐磨室外款', '室外水泥地专用耐磨篮球，七号球，气性良好，表皮轻微磨痕不影响使用，附球包。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=basketball%20on%20outdoor%20court%20at%20golden%20hour%2C%20sport%20photography%2C%20realistic&image_size=landscape_4_3', '运动', '2026-11-11 15:10:00'),
 ('小型加湿器白瓷款', '宿舍用白瓷小加湿器，静音雾量大，容量2L，可用整晚，因搬宿舍出售，配件全新。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=white%20ceramic%20mini%20humidifier%20with%20soft%20mist%20in%20cozy%20bedroom%2C%20lifestyle%20product%20photo&image_size=landscape_4_3', '生活', '2026-11-10 11:40:00');
 
+## 2026-11-20 修正 wzx_gallery 图片地址（在线图片生成服务异常，改用本地封面图）
+
+-- 说明：在线图片生成服务持续返回"生成中"占位图，无法出图，
+-- 已在 frontend/images/ 下生成 10 张本地 SVG 封面图（wzx_gallery_01.svg ~ wzx_gallery_10.svg），
+-- 并将 img_url 更新为本地路径。以下 UPDATE 在 wzx_web 库中按顺序执行。
+
+USE wzx_web;
+
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_01.svg' WHERE id = 1;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_02.svg' WHERE id = 2;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_03.svg' WHERE id = 3;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_04.svg' WHERE id = 4;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_05.svg' WHERE id = 5;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_06.svg' WHERE id = 6;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_07.svg' WHERE id = 7;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_08.svg' WHERE id = 8;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_09.svg' WHERE id = 9;
+UPDATE wzx_gallery SET img_url = '/images/wzx_gallery_10.svg' WHERE id = 10;
+

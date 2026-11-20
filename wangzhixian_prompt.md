@@ -11,3 +11,7 @@
 2026-11-20 | 完成科技新闻列表页面：1、在 MySQL 中建表 wzx_news，字段包含：id、title、summary、content、source、publish_time、cover_img；2、插入至少 8 条真实的科技新闻测试数据；3、后端提供 GET /api/news 接口，返回全部新闻（按发布时间倒序），统一 JSON 格式 { code, msg, data }；4、新建 frontend/news.html，页面顶部显示当前调用的接口地址，下方以列表展示新闻标题、摘要、来源、时间；5、数据用 fetch 获取，控制台输出返回数据；6、把建表与插入数据的 SQL 追加写入 backend/wzx_database.md，接口信息追加写入 backend/wzx_interface.md，本次提示词追加写入 wangzhixian_prompt.md；7、在 frontend/index.html 增加入口链接。 | 大模型：GLM-5.3-Flash
 
 2026-11-20 | 完成图文列表页面：1、在 MySQL 中新建表 wzx_gallery，字段：id、title、description、img_url、category、create_time，插入至少 8 条测试数据；2、后端提供 GET /api/gallery 接口，返回全部图文数据；3、新建 frontend/gallery.html，页面顶部显示接口地址，下方用网格布局展示"上图下文"卡片：图片、标题、描述；4、图片加载失败时显示占位色块，不要出现破图图标；5、页面适配手机宽度；6、记录写入 backend/wzx_database.md、backend/wzx_interface.md 和 wangzhixian_prompt.md，并在首页加入口。 | 大模型：GLM-5.3-Flash
+
+2026-11-20 | 帮我启动后端服务器 | 大模型：GLM-5.3-Flash
+
+2026-11-20 | 帮我解决图片中的问题（图文展示页图片全部显示"The image is generating..."占位图。排查：text_to_image 在线图片生成服务持续返回同一占位图，无法出图。解决：本地生成 10 张按分类配色的 SVG 封面图到 frontend/images/，UPDATE wzx_gallery 表将 img_url 改为本地路径 /images/wzx_gallery_01.svg ~ 10.svg，页面立即正常显示） | 大模型：GLM-5.3-Flash
