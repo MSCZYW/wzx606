@@ -1,0 +1,167 @@
+/*
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：数据库连接测试页样式
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+  color: #eaf2ff;
+  background: linear-gradient(135deg, #1b2a4e 0%, #2b3f77 45%, #4a2f6b 100%);
+  overflow-x: hidden;
+}
+
+#wzx_canvas_bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+.wzx_page {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 64px 24px 40px;
+}
+
+.wzx_header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.wzx_title {
+  font-size: 32px;
+  letter-spacing: 6px;
+  background: linear-gradient(90deg, #9fd0ff, #e3c8ff, #ffd6e8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.wzx_subtitle {
+  margin-top: 12px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: rgba(223, 233, 255, 0.75);
+}
+
+.wzx_form_card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 40px rgba(10, 18, 45, 0.35);
+  padding: 28px;
+}
+
+.wzx_form_item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.wzx_form_label {
+  width: 72px;
+  font-size: 15px;
+  color: rgba(214, 228, 255, 0.8);
+  letter-spacing: 2px;
+}
+
+.wzx_form_input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #eaf2ff;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.wzx_form_input:focus {
+  border-color: rgba(143, 182, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.wzx_btn {
+  width: 100%;
+  padding: 13px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(90deg, #4f7cff, #8a5cff);
+  transition: opacity 0.25s ease, transform 0.15s ease;
+}
+
+.wzx_btn:hover {
+  opacity: 0.9;
+}
+
+.wzx_btn:active {
+  transform: scale(0.98);
+}
+
+.wzx_btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* 结果展示：成功绿 / 失败红 */
+.wzx_result {
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+.wzx_result.wzx_success {
+  color: #7dffb0;
+  background: rgba(60, 200, 120, 0.14);
+  border: 1px solid rgba(125, 255, 176, 0.4);
+}
+
+.wzx_result.wzx_error {
+  color: #ff8a8a;
+  background: rgba(230, 70, 70, 0.14);
+  border: 1px solid rgba(255, 138, 138, 0.4);
+}
+
+.wzx_footer {
+  margin-top: 36px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(214, 228, 255, 0.5);
+}
+
+.wzx_back_link {
+  color: #9fc3ff;
+  text-decoration: none;
+}
+
+.wzx_back_link:hover {
+  text-decoration: underline;
+}

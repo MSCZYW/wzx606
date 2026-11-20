@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：数据库连接测试页，调用 /api/db-test 接口
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据库连接测试 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_database.css">
+</head>
+<body>
+  <!-- canvas 背景动画 -->
+  <canvas id="wzx_canvas_bg"></canvas>
+
+  <div class="wzx_page">
+    <header class="wzx_header">
+      <h1 class="wzx_title">数据库连接测试</h1>
+      <p class="wzx_subtitle">输入 MySQL 用户名与密码，测试与后端数据库的连接</p>
+    </header>
+
+    <main class="wzx_form_card">
+      <div class="wzx_form_item">
+        <label class="wzx_form_label" for="wzx_username">用户名</label>
+        <input class="wzx_form_input" type="text" id="wzx_username" name="wzx_username" value="root" autocomplete="off">
+      </div>
+      <div class="wzx_form_item">
+        <label class="wzx_form_label" for="wzx_password">密　码</label>
+        <input class="wzx_form_input" type="password" id="wzx_password" name="wzx_password" value="root" autocomplete="off">
+      </div>
+      <button class="wzx_btn" id="wzx_test_btn" type="button">测试连接</button>
+      <p class="wzx_result" id="wzx_result" hidden></p>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606 · <a class="wzx_back_link" href="index.html">返回首页</a></p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_database.js"></script>
+</body>
+</html>

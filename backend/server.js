@@ -8,6 +8,7 @@ const cors = require('cors');
 const path = require('path');
 
 const wzx_indexRoutes = require('./routes/wzx_indexRoutes');
+const wzx_dbTestRoutes = require('./routes/wzx_dbTestRoutes');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // 所有接口以 /api/ 为前缀
 app.use('/api', wzx_indexRoutes);
+app.use('/api', wzx_dbTestRoutes);
 
 // 统一 404（JSON 格式）
 app.use((req, res) => {
