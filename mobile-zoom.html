@@ -88,6 +88,28 @@
       line-height: 1.8;
     }
 
+    /* 任务三演示视频区 */
+    .wzx_video-section {
+      width: 92%;
+      max-width: 380px;
+      margin-top: 18px;
+    }
+
+    .wzx_video-title {
+      color: #9fb3d1;
+      font-size: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .wzx_video {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      background: #000;
+      display: block;
+    }
+
     .wzx_back-link {
       color: #5b8cff;
       font-size: 14px;
@@ -108,6 +130,12 @@
 
   <p class="wzx_scale-bar" id="wzx_scaleBar">当前缩放：1.0x</p>
   <p class="wzx_hint">双指捏合缩放 · 单指拖动 · 双击 1x/2x 切换</p>
+  <div class="wzx_video-section">
+    <p class="wzx_video-title">🎬 任务三 · 双指缩放演示视频</p>
+    <!-- 任务三演示视频：controls 显示播放/进度/音量控件 -->
+    <video class="wzx_video" src="任务三视频.mp4" controls preload="metadata"></video>
+  </div>
+
   <a class="wzx_back-link" href="index.html">返回首页</a>
 
   <script>

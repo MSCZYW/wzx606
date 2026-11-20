@@ -110,6 +110,27 @@
       transform: scale(0.95);
     }
 
+    /* 任务三演示视频区 */
+    .wzx_video-section {
+      width: 88%;
+      max-width: 380px;
+      margin-top: 22px;
+    }
+
+    .wzx_video-title {
+      color: #9fb3d1;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .wzx_video {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      background: #000;
+      display: block;
+    }
+
     .wzx_back-link {
       color: #5b8cff;
       font-size: 14px;
@@ -148,6 +169,18 @@
   <div class="wzx_note">
     <b>为什么必须做降级？</b><br>
     devicemotion 事件依赖设备物理陀螺仪/加速度传感器，台式机、部分笔记本和模拟器上根本不会触发，或返回全 0 数据；此外 iOS Safari 自 13 起要求用户主动授权（DeviceMotionEvent.requestPermission），未授权时同样拿不到数据。如果只写传感器逻辑，这些环境下页面会永远"等待摇动"，功能彻底失效。所以必须检测"事件不触发/数据无效"并退化为按钮点击方案，保证任何设备上核心功能（抽菜谱）都可用。
+  </div>
+
+  <div class="wzx_video-section">
+    <p class="wzx_video-title">🎬 任务三 · 摇一摇功能演示视频</p>
+    <!-- 任务三演示视频：controls 显示播放/进度/音量控件 -->
+    <video class="wzx_video" src="任务三视频.mp4" controls preload="metadata"></video>
+  </div>
+
+  <div class="wzx_video-section">
+    <p class="wzx_video-title">🎬 任务四 · 演示视频</p>
+    <!-- 任务四演示视频：controls 显示播放/进度/音量控件 -->
+    <video class="wzx_video" src="任务四视频.mp4" controls preload="metadata"></video>
   </div>
 
   <a class="wzx_back-link" href="index.html">返回首页</a>
