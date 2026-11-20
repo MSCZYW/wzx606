@@ -10,3 +10,5 @@ POST /api/db-test | POST | JSON body：{ "wzx_user": "root", "wzx_password": "ro
 
 GET /api/news | GET | 无参数，返回全部新闻，按 publish_time 倒序 | 统一 JSON，data 为新闻数组，元素字段：id、title、summary、content、source、publish_time、cover_img，示例：{ "code": 0, "msg": "获取新闻列表成功", "data": [ { "id": 1, "title": "国产超大规模模型开源，推理成本再降一个数量级", "summary": "国内科研团队发布新一代开源大模型……", "content": "……", "source": "科技日报", "publish_time": "2026-11-19T09:30:00.000Z", "cover_img": "https://…" } ] } | 2026-11-20
 
+GET /api/gallery | GET | 无参数，返回全部图文数据，按 create_time 倒序 | 统一 JSON，data 为图文数组，元素字段：id、title、description、img_url、category、create_time，示例：{ "code": 0, "msg": "获取图文列表成功", "data": [ { "id": 1, "title": "95新无线降噪耳机", "description": "自用一年的白色无线降噪耳机……", "img_url": "https://…", "category": "数码", "create_time": "2026-11-19T20:10:00.000Z" } ] } | 2026-11-20
+

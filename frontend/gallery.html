@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-20 | 大模型：GLM-5.3-Flash
+  说明：图文列表页，fetch 获取 /api/gallery，网格布局上图下文卡片
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图文展示 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_gallery.css">
+</head>
+<body>
+  <!-- canvas 背景动画 -->
+  <canvas id="wzx_canvas_bg"></canvas>
+
+  <div class="wzx_page">
+    <header class="wzx_header">
+      <h1 class="wzx_title">图文展示</h1>
+      <p class="wzx_subtitle">校园好物图鉴，上图下文卡片展示</p>
+      <p class="wzx_api_bar">当前接口：<span id="wzx_api_url">GET /api/gallery</span></p>
+    </header>
+
+    <main class="wzx_gallery_grid" id="wzx_gallery_grid">
+      <p class="wzx_loading" id="wzx_loading">数据加载中...</p>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606 · <a class="wzx_back_link" href="index.html">返回首页</a></p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_gallery.js"></script>
+</body>
+</html>

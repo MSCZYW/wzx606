@@ -38,3 +38,32 @@ INSERT INTO wzx_news (title, summary, content, source, publish_time, cover_img) 
 ('国产操作系统装机量突破十亿，生态适配加速', '国产桌面与移动操作系统累计装机量突破十亿台，主流应用适配率超过95%，政务与教育市场占有率持续提升。', '国产操作系统生态大会本周公布数据：国产桌面及移动操作系统累计装机量已突破十亿台，主流办公、社交与音视频应用适配率达到95%以上。相关负责人表示，明年将重点推进工业软件与专业设计软件的原生适配，并设立十亿元级开发者激励基金。', '中国电子报', '2026-11-11 11:45:00', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=desktop%20computer%20with%20abstract%20operating%20system%20interface%20glowing%2C%20technology%20news%20cover%2C%20clean%20modern&image_size=landscape_16_9'),
 ('深海载人潜水器完成万米级科考返航', '国产载人潜水器完成万米深渊科考任务顺利返航，带回超200份深渊生物与地质样本，多项观测数据为国际首次获取。', '历时52天，国产载人潜水器搭载科考船于本周返航，完成了马里亚纳海沟万米级深渊科考任务。本航次累计下潜23次，采集深渊生物、沉积物与岩石样本超过200份，并首次在国际上获取了万米深处连续72小时的环境观测数据，为深渊生命起源研究提供关键支撑。', '央视新闻', '2026-11-10 17:10:00', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=deep%20sea%20submersible%20descending%20in%20dark%20ocean%20with%20bioluminescent%20creatures%2C%20science%20news%20cover&image_size=landscape_16_9');
 
+## 2026-11-20 建表 wzx_gallery 并插入测试数据
+
+-- 在 wzx_web 库中执行
+USE wzx_web;
+
+-- 1. 建表 wzx_gallery（图文展示表）
+CREATE TABLE IF NOT EXISTS wzx_gallery (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL COMMENT '标题',
+  description VARCHAR(500) NOT NULL COMMENT '描述',
+  img_url VARCHAR(500) NOT NULL COMMENT '图片地址',
+  category VARCHAR(50) NOT NULL COMMENT '分类',
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  INDEX idx_create_time (create_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图文展示表';
+
+-- 2. 插入 10 条图文测试数据
+INSERT INTO wzx_gallery (title, description, img_url, category, create_time) VALUES
+('95新无线降噪耳机', '自用一年的白色无线降噪耳机，音质出色，续航约30小时，配件齐全，附原装充电线与收纳袋。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=white%20wireless%20noise%20cancelling%20headphones%20on%20clean%20desk%2C%20product%20photography%2C%20soft%20light&image_size=landscape_4_3', '数码', '2026-11-19 20:10:00'),
+('机械键盘87键茶轴', '去年双十一入手的茶轴机械键盘，键帽无打油，白色背光，附赠拔键器，因换用 quieter 轴体故出售。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=compact%2087%20key%20mechanical%20keyboard%20with%20white%20keycaps%2C%20product%20photo%2C%20warm%20light&image_size=landscape_4_3', '数码', '2026-11-18 14:35:00'),
+('高等数学同济版上下册', '大一大二用过的同济版高等数学教材，第八版，笔记较少，九成新，两本一起出，适合学弟学妹。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=stack%20of%20used%20advanced%20mathematics%20textbooks%20on%20wooden%20desk%2C%20cozy%20campus%20light&image_size=landscape_4_3', '图书', '2026-11-17 09:50:00'),
+('羽毛球拍单拍（碳纤维）', '碳纤维羽毛球拍，4U规格，手胶新换，拍框无磕碰，附原装拍套，因升级设备低价转让。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=badminton%20racket%20leaning%20on%20indoor%20court%20floor%2C%20sport%20product%20photography&image_size=landscape_4_3', '运动', '2026-11-16 18:25:00'),
+('宿舍折叠书桌小推车', '宿舍神器折叠书桌，可放笔记本电脑和书籍，带滚轮方便移动，使用半年无明显划痕。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=folding%20laptop%20desk%20cart%20in%20dormitory%20room%2C%20minimal%20style%2C%20daylight&image_size=landscape_4_3', '生活', '2026-11-15 12:00:00'),
+('山地自行车26寸', '骑行两年的26寸山地车，前后变速灵敏，刚换的新刹车片，已保养上油，附车锁与打气筒。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mountain%20bicycle%20parked%20beside%20campus%20path%20with%20trees%2C%20autumn%20light%2C%20realistic%20photo&image_size=landscape_4_3', '运动', '2026-11-14 16:45:00'),
+('考研英语真题全套', '考研英语一历年真题解析全套（近15年），做完一半，批注集中在阅读部分，书况良好。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=postgraduate%20entrance%20exam%20english%20workbooks%20with%20sticky%20notes%2C%20study%20desk%2C%20soft%20morning%20light&image_size=landscape_4_3', '图书', '2026-11-13 10:30:00'),
+('平板电脑11英寸128G', '11英寸平板电脑，128G存储，屏幕无划痕，贴膜带壳使用，附保护壳与手写笔，用于网课和记笔记。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tablet%20with%20stylus%20pen%20on%20study%20desk%20with%20notebooks%2C%20product%20photography%2C%20clean%20background&image_size=landscape_4_3', '数码', '2026-11-12 19:20:00'),
+('篮球耐磨室外款', '室外水泥地专用耐磨篮球，七号球，气性良好，表皮轻微磨痕不影响使用，附球包。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=basketball%20on%20outdoor%20court%20at%20golden%20hour%2C%20sport%20photography%2C%20realistic&image_size=landscape_4_3', '运动', '2026-11-11 15:10:00'),
+('小型加湿器白瓷款', '宿舍用白瓷小加湿器，静音雾量大，容量2L，可用整晚，因搬宿舍出售，配件全新。', 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=white%20ceramic%20mini%20humidifier%20with%20soft%20mist%20in%20cozy%20bedroom%2C%20lifestyle%20product%20photo&image_size=landscape_4_3', '生活', '2026-11-10 11:40:00');
+

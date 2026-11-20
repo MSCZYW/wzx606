@@ -10,6 +10,7 @@ const path = require('path');
 const wzx_indexRoutes = require('./routes/wzx_indexRoutes');
 const wzx_dbTestRoutes = require('./routes/wzx_dbTestRoutes');
 const wzx_newsRoutes = require('./routes/wzx_newsRoutes');
+const wzx_galleryRoutes = require('./routes/wzx_galleryRoutes');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, '..', 'frontend')));
 app.use('/api', wzx_indexRoutes);
 app.use('/api', wzx_dbTestRoutes);
 app.use('/api', wzx_newsRoutes);
+app.use('/api', wzx_galleryRoutes);
 
 // 统一 404（JSON 格式）
 app.use((req, res) => {
