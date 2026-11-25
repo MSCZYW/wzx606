@@ -123,3 +123,34 @@ INSERT INTO wzx_chat_message (wzx_session_id, wzx_role, wzx_content, wzx_create_
 ('wzx_demo_session', 'user', '怎么联系卖家？', '2026-11-20 10:03:00'),
 ('wzx_demo_session', 'assistant', '在商品页面点击"联系卖家"，即可与卖家在线沟通，约定看货和交易时间。祝您购物愉快！', '2026-11-20 10:03:05');
 
+## 2026-11-25 新建知识库表 wzx_kb_file / wzx_kb_chunk（RAG）
+
+-- 说明：为知识库（RAG）功能新建两张表：文件表存上传解析后的文件信息，
+-- 文本块表存文件按约 500 字切分出的语义块，供检索问答使用。
+-- 以下 SQL 在 wzx_web 库中按顺序执行。
+
+USE wzx_web;
+
+CREATE TABLE IF NOT EXISTS wzx_kb_file (
+  wzx_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '文件ID',
+  wzx_filename VARCHAR(255) NOT NULL COMMENT '文件名',
+  wzx_file_type VARCHAR(20) NOT NULL COMMENT '文件类型：doc/docx/ppt/pptx/pdf/txt',
+  wzx_file_size INT NOT NULL DEFAULT 0 COMMENT '文件大小(字节)',
+  wzx_chunk_count INT NOT NULL DEFAULT 0 COMMENT '切分出的文本块数量',
+  wzx_create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='知识库文件表';
+
+CREATE TABLE IF NOT EXISTS wzx_kb_chunk (
+  wzx_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '文本块ID',
+  wzx_file_id INT NOT NULL COMMENT '所属文件ID',
+  wzx_seq INT NOT NULL DEFAULT 1 COMMENT '块序号',
+  wzx_content TEXT NOT NULL COMMENT '文本块内容',
+  wzx_create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  INDEX idx_wzx_kb_file (wzx_file_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='知识库文本块表';
+
+-- 知识库数据由 2 个知识库文件上传解析自动生成（无需手工 INSERT）：
+--   frontend/kb/中华美食街商户手册.docx（解析出 2 个文本块）
+--   frontend/kb/中华美食街常见问题.pptx（解析出 1 个文本块）
+-- 在新机器重建时，启动后端后访问知识库页面重新上传这两个文件即可恢复数据。
+

@@ -53,8 +53,11 @@ const wzx_customerService = {
     return wzxName;
   },
 
-  /** 调用指定服务商的 Chat Completions 接口，返回 AI 回复文本 */
-  async getReply(wzxHistory, wzxProvider) {
+  /**
+   * 调用指定服务商的 Chat Completions 接口，返回 AI 回复文本
+   * wzxContext：可选，RAG 检索到的知识库资料，注入到 system 提示词
+   */
+  async getReply(wzxHistory, wzxProvider, wzxContext) {
     var wzxName = this.wzx_resolveProvider(wzxProvider);
     var wzxConf = this.wzx_providers[wzxName];
     var wzxApiKey = wzxConf.wzx_apiKey();
@@ -65,8 +68,16 @@ const wzx_customerService = {
       throw new Error('缺少服务商 ' + wzxName + ' 的 API Key 配置，请在 backend/.env 中填写');
     }
 
+    var wzxSystemContent = this.wzx_systemPrompt;
+    if (wzxContext) {
+      wzxSystemContent += '\n\n【知识库检索资料】以下是知识库检索到的资料：\n' + wzxContext +
+        '\n资料使用规则：1）若资料与问题相关，请直接依据资料回答（即使超出营业时间、招牌菜、配送范围三类范围，也应当作客服可以回答的问题，不要拒答）；' +
+        '2）资料中没有的信息要明确说明"知识库中暂无相关内容"，不要编造；' +
+        '3）只有当资料与问题完全无关时，才使用固定话术拒答并引导留言。';
+    }
+
     var wzxMessages = [
-      { role: 'system', content: this.wzx_systemPrompt },
+      { role: 'system', content: wzxSystemContent },
       ...wzxHistory.map(function (m) {
         return {
           role: m.wzx_role === 'assistant' ? 'assistant' : 'user',
@@ -74,6 +85,10 @@ const wzx_customerService = {
         };
       })
     ];
+
+    // 按要求：在控制台输出发送给大模型的数据
+    console.log('===== 发送给大模型的数据（服务商：' + wzxName + '，模型：' + wzxModel + '）=====');
+    console.log(JSON.stringify(wzxMessages, null, 2));
 
     var wzxResp = await fetch(wzxBaseUrl + '/chat/completions', {
       method: 'POST',
@@ -97,6 +112,11 @@ const wzx_customerService = {
     }
 
     var wzxData = await wzxResp.json();
+
+    // 按要求：在控制台输出大模型返回的数据
+    console.log('===== 大模型返回的数据 =====');
+    console.log(JSON.stringify(wzxData, null, 2));
+
     var wzxReply =
       wzxData && wzxData.choices && wzxData.choices[0] && wzxData.choices[0].message
         ? wzxData.choices[0].message.content

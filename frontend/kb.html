@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-25 | 大模型：GLM-5.3-Flash
+  说明：知识库管理页面（RAG）：文件上传 / 文件管理 / 基于知识库的问答
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>知识库管理 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_kb.css">
+</head>
+<body>
+  <canvas id="wzx_bg_canvas"></canvas>
+
+  <div class="wzx_page_wrap">
+    <header class="wzx_page_header">
+      <a class="wzx_back_link" href="index.html">‹ 返回首页</a>
+      <h1 class="wzx_page_title">知识库管理（RAG）</h1>
+      <p class="wzx_api_url">上传 /api/kb/upload ｜ 问答 /api/kb/ask ｜ 支持 doc、docx、ppt、pptx、pdf、txt</p>
+    </header>
+
+    <main class="wzx_main_grid">
+      <!-- 左侧：文件上传 + 文件列表 -->
+      <section class="wzx_card wzx_kb_panel">
+        <h2 class="wzx_card_title">知识库文件</h2>
+
+        <div class="wzx_upload_area" id="wzx_upload_area">
+          <input type="file" id="wzx_file_input" hidden
+                 accept=".doc,.docx,.ppt,.pptx,.pdf,.txt">
+          <div class="wzx_upload_icon">⇪</div>
+          <p class="wzx_upload_tip">点击选择或拖拽文件到这里上传</p>
+          <p class="wzx_upload_sub">doc / docx / ppt / pptx / pdf / txt，≤10MB</p>
+        </div>
+
+        <ul class="wzx_file_list" id="wzx_file_list">
+          <li class="wzx_file_empty" id="wzx_file_empty">知识库还没有文件，先上传一个吧～</li>
+        </ul>
+      </section>
+
+      <!-- 右侧：RAG 问答 -->
+      <section class="wzx_card wzx_qa_panel">
+        <div class="wzx_chat_toolbar">
+          <span class="wzx_cs_avatar">福</span>
+          <div class="wzx_cs_info">
+            <span class="wzx_cs_name">福福 · 知识库客服</span>
+            <span class="wzx_cs_status" id="wzx_cs_status">● 在线</span>
+          </div>
+          <select class="wzx_provider_select" id="wzx_provider_select" title="切换 AI 服务商">
+            <option value="siliconflow">硅基流动</option>
+            <option value="qiniu">七牛</option>
+          </select>
+        </div>
+
+        <div class="wzx_chat_box" id="wzx_chat_box">
+          <div class="wzx_msg_row wzx_msg_ai">
+            <div class="wzx_msg_bubble">我是基于知识库回答问题的客服福福。上传知识库文件后，问我任何和美食街有关的问题吧！</div>
+          </div>
+        </div>
+
+        <div class="wzx_quick_list" id="wzx_quick_list">
+          <button class="wzx_quick_btn" type="button" data-q="美食街会员日是哪天？有什么优惠？">会员优惠</button>
+          <button class="wzx_quick_btn" type="button" data-q="美食街有停车场吗？怎么收费？">停车信息</button>
+          <button class="wzx_quick_btn" type="button" data-q="川湘阁的招牌菜是什么？">招牌菜</button>
+        </div>
+
+        <form class="wzx_input_row" id="wzx_input_form" autocomplete="off">
+          <input class="wzx_input" id="wzx_input" type="text" maxlength="500" placeholder="基于知识库提问…">
+          <button class="wzx_send_btn" id="wzx_send_btn" type="submit">提问</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606</p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_kb.js"></script>
+</body>
+</html>

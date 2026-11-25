@@ -1,0 +1,323 @@
+/*
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-25 | 大模型：GLM-5.3-Flash
+  说明：知识库管理页面样式（与站点风格统一：深色渐变 + 毛玻璃卡片）
+*/
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: #e8ecf5;
+  background: linear-gradient(135deg, #0f1530 0%, #1a1035 50%, #0c1a2e 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+#wzx_bg_canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wzx_page_wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ---------- 顶部 ---------- */
+.wzx_page_header { margin-bottom: 18px; }
+
+.wzx_back_link {
+  display: inline-block;
+  color: #9fb2d8;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 10px;
+  transition: color .2s;
+}
+.wzx_back_link:hover { color: #fff; }
+
+.wzx_page_title {
+  font-size: 26px;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.wzx_api_url {
+  font-size: 12px;
+  color: #7f90b5;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  padding: 5px 14px;
+  display: inline-block;
+}
+
+/* ---------- 双栏布局 ---------- */
+.wzx_main_grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 16px;
+  flex: 1;
+  align-items: stretch;
+}
+
+.wzx_card {
+  background: rgba(18, 24, 48, .68);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.wzx_card_title { font-size: 16px; margin-bottom: 14px; letter-spacing: 2px; }
+
+/* ---------- 上传区 ---------- */
+.wzx_upload_area {
+  border: 2px dashed rgba(120,150,230,.45);
+  border-radius: 12px;
+  padding: 22px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  margin-bottom: 14px;
+}
+.wzx_upload_area:hover,
+.wzx_upload_area.wzx_drag_over {
+  background: rgba(59,108,240,.14);
+  border-color: #5a7cf0;
+}
+
+.wzx_upload_icon { font-size: 26px; color: #7fa0f5; margin-bottom: 6px; }
+.wzx_upload_tip { font-size: 13px; color: #b8c5e2; }
+.wzx_upload_sub { font-size: 11px; color: #6f80a8; margin-top: 4px; }
+.wzx_upload_ing { font-size: 13px; color: #7fa0f5; }
+
+/* ---------- 文件列表 ---------- */
+.wzx_file_list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.wzx_file_empty { font-size: 12px; color: #67739a; text-align: center; padding: 10px 0; }
+
+.wzx_file_item {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wzx_file_icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: rgba(59,108,240,.25);
+  color: #9db6f5;
+  text-transform: uppercase;
+}
+
+.wzx_file_info { flex: 1; min-width: 0; }
+.wzx_file_name {
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wzx_file_meta { font-size: 11px; color: #7f90b5; margin-top: 2px; }
+
+.wzx_file_del {
+  background: rgba(240,80,80,.15);
+  color: #f09090;
+  border: 1px solid rgba(240,80,80,.35);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+.wzx_file_del:hover { background: rgba(240,80,80,.3); }
+
+/* ---------- 问答区 ---------- */
+.wzx_qa_panel { display: flex; flex-direction: column; }
+
+.wzx_chat_toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  margin-bottom: 14px;
+}
+
+.wzx_cs_avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b6cf0, #6a3df0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.wzx_cs_info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.wzx_cs_name { font-size: 15px; font-weight: 600; }
+.wzx_cs_status { font-size: 12px; color: #4ad48a; }
+
+.wzx_provider_select {
+  background: rgba(255,255,255,.08);
+  color: #b8c5e2;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+.wzx_provider_select option { color: #1a1035; }
+
+.wzx_chat_box {
+  flex: 1;
+  min-height: 320px;
+  max-height: 460px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 6px;
+  scroll-behavior: smooth;
+}
+
+.wzx_msg_row { display: flex; }
+.wzx_msg_user { justify-content: flex-end; }
+.wzx_msg_ai { justify-content: flex-start; }
+
+.wzx_msg_bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.wzx_msg_ai .wzx_msg_bubble {
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.1);
+  border-top-left-radius: 4px;
+}
+
+.wzx_msg_user .wzx_msg_bubble {
+  background: linear-gradient(135deg, #3b6cf0, #5a4af0);
+  border-top-right-radius: 4px;
+}
+
+.wzx_msg_sources {
+  max-width: 80%;
+  font-size: 11px;
+  color: #7f90b5;
+  padding-left: 14px;
+}
+.wzx_msg_sources span {
+  display: inline-block;
+  background: rgba(59,108,240,.16);
+  border: 1px solid rgba(59,108,240,.4);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin: 3px 6px 0 0;
+}
+
+.wzx_msg_loading .wzx_msg_bubble { color: #9fb2d8; background: rgba(255,255,255,.06); }
+
+/* ---------- 快捷问题 + 输入 ---------- */
+.wzx_quick_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 0 10px;
+}
+
+.wzx_quick_btn {
+  background: rgba(59,108,240,.16);
+  color: #9db6f5;
+  border: 1px solid rgba(59,108,240,.4);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.wzx_quick_btn:hover { background: rgba(59,108,240,.32); color: #fff; }
+
+.wzx_input_row {
+  display: flex;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.wzx_input {
+  flex: 1;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.wzx_input:focus { border-color: #5a7cf0; }
+.wzx_input::placeholder { color: #6f80a8; }
+
+.wzx_send_btn {
+  background: linear-gradient(135deg, #3b6cf0, #6a3df0);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0 24px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.wzx_send_btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---------- 底部 ---------- */
+.wzx_footer {
+  text-align: center;
+  color: #67739a;
+  font-size: 12px;
+  margin-top: 22px;
+}
+
+/* ---------- 手机适配 ---------- */
+@media (max-width: 760px) {
+  .wzx_main_grid { grid-template-columns: 1fr; }
+  .wzx_page_title { font-size: 22px; }
+  .wzx_chat_box { min-height: 260px; }
+  .wzx_msg_bubble { max-width: 88%; }
+  .wzx_send_btn { padding: 0 16px; }
+}
