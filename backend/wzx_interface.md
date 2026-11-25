@@ -22,3 +22,5 @@ DELETE /api/kb/files/:id | DELETE | 路径参数 id：文件ID，示例 /api/kb/
 
 POST /api/kb/ask | POST | JSON body：{ "wzx_question": "美食街有停车场吗？怎么收费？", "wzx_provider": "siliconflow" }（wzx_question 必填 ≤500 字；wzx_provider 可选 siliconflow/qiniu）| 成功：{ "code": 0, "msg": "回答成功", "data": { "wzx_answer": "美食街地下停车场对就餐顾客免费开放2小时……", "wzx_sources": [ { "wzx_file": "中华美食街商户手册.docx", "wzx_seq": 1, "wzx_score": 14 } ], "wzx_provider": "siliconflow" } }；失败：{ "code": 1, "msg": "知识库问答失败：<原因>", "data": null }；RAG 流程：问题 2-gram 关键词检索 wzx_kb_chunk 最相关 3 块 → 注入 system 提示词 → 调用大模型；服务端控制台输出发送/返回的完整数据 | 2026-11-25
 
+POST /api/vision/describe | POST | multipart/form-data，字段 wzx_image：图片文件（png/jpg/webp/gif/bmp，≤10MB）| 成功：{ "code": 0, "msg": "识别成功", "data": { "wzx_description": "一副白色无线头戴式耳机静置于浅色木纹桌面上……", "wzx_model": "Qwen/Qwen3-VL-8B-Instruct", "wzx_file_type": "jpg", "wzx_file_size": 264270 } }；失败：{ "code": 1, "msg": "图像识别失败：<原因>", "data": null }；图片转 base64 data URL 后以 image_url 消息调用硅基流动视觉模型；服务端控制台输出发送（base64 截断展示）与返回的完整数据 | 2026-11-25
+

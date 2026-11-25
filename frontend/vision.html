@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-25 | 大模型：GLM-5.3-Flash
+  说明：图像识别页面：上传图片，调用硅基流动视觉模型（Qwen/Qwen3-VL-8B-Instruct）返回描述
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图像识别 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_vision.css">
+</head>
+<body>
+  <canvas id="wzx_bg_canvas"></canvas>
+
+  <div class="wzx_page_wrap">
+    <header class="wzx_page_header">
+      <a class="wzx_back_link" href="index.html">‹ 返回首页</a>
+      <h1 class="wzx_page_title">图像识别</h1>
+      <p class="wzx_api_url" id="wzx_api_url">接口地址：/api/vision/describe</p>
+    </header>
+
+    <main class="wzx_vision_card">
+      <div class="wzx_upload_area" id="wzx_upload_area">
+        <input type="file" id="wzx_file_input" hidden accept=".png,.jpg,.jpeg,.webp,.gif,.bmp">
+        <div class="wzx_upload_preview" id="wzx_preview">
+          <div class="wzx_upload_icon">🖼</div>
+          <p class="wzx_upload_tip">点击选择或拖拽图片到这里</p>
+          <p class="wzx_upload_sub">png / jpg / webp / gif / bmp，≤10MB</p>
+        </div>
+      </div>
+
+      <div class="wzx_action_row">
+        <button class="wzx_recognize_btn" id="wzx_recognize_btn" type="button" disabled>开始识别</button>
+        <button class="wzx_reset_btn" id="wzx_reset_btn" type="button">重置</button>
+      </div>
+
+      <div class="wzx_result_box" id="wzx_result_box">
+        <div class="wzx_result_title" id="wzx_result_title">识别结果</div>
+        <p class="wzx_result_text" id="wzx_result_text">上传一张图片，AI 将为你描述它的内容。</p>
+        <p class="wzx_result_meta" id="wzx_result_meta"></p>
+      </div>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606</p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_vision.js"></script>
+</body>
+</html>
