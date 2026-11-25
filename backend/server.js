@@ -14,6 +14,7 @@ const wzx_galleryRoutes = require('./routes/wzx_galleryRoutes');
 const wzx_chatRoutes = require('./routes/wzx_chatRoutes');
 const wzx_kbRoutes = require('./routes/wzx_kbRoutes');
 const wzx_visionRoutes = require('./routes/wzx_visionRoutes');
+const wzx_asrRoutes = require('./routes/wzx_asrRoutes');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/api', wzx_galleryRoutes);
 app.use('/api', wzx_chatRoutes);
 app.use('/api', wzx_kbRoutes);
 app.use('/api', wzx_visionRoutes);
+app.use('/api', wzx_asrRoutes);
 
 // 统一 404（JSON 格式）
 app.use((req, res) => {

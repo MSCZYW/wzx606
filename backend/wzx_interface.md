@@ -24,3 +24,5 @@ POST /api/kb/ask | POST | JSON body：{ "wzx_question": "美食街有停车场�
 
 POST /api/vision/describe | POST | multipart/form-data，字段 wzx_image：图片文件（png/jpg/webp/gif/bmp，≤10MB）| 成功：{ "code": 0, "msg": "识别成功", "data": { "wzx_description": "一副白色无线头戴式耳机静置于浅色木纹桌面上……", "wzx_model": "Qwen/Qwen3-VL-8B-Instruct", "wzx_file_type": "jpg", "wzx_file_size": 264270 } }；失败：{ "code": 1, "msg": "图像识别失败：<原因>", "data": null }；图片转 base64 data URL 后以 image_url 消息调用硅基流动视觉模型；服务端控制台输出发送（base64 截断展示）与返回的完整数据 | 2026-11-25
 
+POST /api/asr/recognize | POST | multipart/form-data，字段 wzx_audio：音频文件（wav/mp3/m4a/webm/ogg/opus/aac/flac，≤20MB）| 成功：{ "code": 0, "msg": "识别成功", "data": { "wzx_text": "请把七元项目的报告发给罗科。下周我们要上线悬殊系统。", "wzx_provider": "siliconflow", "wzx_model": "Qwen/Qwen3-ASR-1.7B", "wzx_language": "Chinese", "wzx_file_size": 199378 } }；失败：{ "code": 1, "msg": "语音识别失败：<原因>", "data": null }；优先调用七牛 Qwen-Audio-3.0-ASR-Flash（chat/completions + input_audio），七牛通道不可用时自动降级硅基流动 /audio/transcriptions（Qwen/Qwen3-ASR-1.7B）；服务端控制台输出发送（base64 截断）与返回数据 | 2026-11-25
+

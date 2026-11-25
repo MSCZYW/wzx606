@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-25 | 大模型：GLM-5.3-Flash
+  说明：语音识别页面：麦克风录音或上传音频文件，调用 ASR 模型转写为文字
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>语音识别 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_asr.css">
+</head>
+<body>
+  <canvas id="wzx_bg_canvas"></canvas>
+
+  <div class="wzx_page_wrap">
+    <header class="wzx_page_header">
+      <a class="wzx_back_link" href="index.html">‹ 返回首页</a>
+      <h1 class="wzx_page_title">语音识别</h1>
+      <p class="wzx_api_url" id="wzx_api_url">接口地址：/api/asr/recognize</p>
+    </header>
+
+    <main class="wzx_asr_card">
+      <!-- 录音区 -->
+      <div class="wzx_record_box">
+        <button class="wzx_record_btn" id="wzx_record_btn" type="button">
+          <span class="wzx_record_dot" id="wzx_record_dot"></span>
+          <span id="wzx_record_label">开始录音</span>
+        </button>
+        <span class="wzx_record_time" id="wzx_record_time">00:00</span>
+      </div>
+
+      <!-- 录音预览 -->
+      <div class="wzx_audio_preview" id="wzx_audio_preview" hidden>
+        <audio id="wzx_audio_player" controls></audio>
+        <div class="wzx_audio_info" id="wzx_audio_info"></div>
+      </div>
+
+      <!-- 文件上传 -->
+      <div class="wzx_upload_row">
+        <input type="file" id="wzx_file_input" hidden accept=".wav,.mp3,.m4a,.webm,.ogg,.opus,.aac,.flac">
+        <button class="wzx_file_btn" id="wzx_file_btn" type="button">或选择音频文件（wav/mp3/webm 等）</button>
+      </div>
+
+      <div class="wzx_action_row">
+        <button class="wzx_recognize_btn" id="wzx_recognize_btn" type="button" disabled>开始识别</button>
+        <button class="wzx_reset_btn" id="wzx_reset_btn" type="button">重置</button>
+      </div>
+
+      <!-- 结果 -->
+      <div class="wzx_result_box" id="wzx_result_box">
+        <div class="wzx_result_title">转写结果</div>
+        <p class="wzx_result_text" id="wzx_result_text">录音或选择音频文件后，AI 将把语音转换为文字。</p>
+        <p class="wzx_result_meta" id="wzx_result_meta"></p>
+      </div>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606</p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_asr.js"></script>
+</body>
+</html>
