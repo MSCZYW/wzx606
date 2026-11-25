@@ -13,6 +13,7 @@ const wzx_chatController = {
     try {
       const wzxMessage = (req.body && req.body.wzx_message || '').trim();
       let wzxSessionId = (req.body && req.body.wzx_session_id || '').trim();
+      const wzxProvider = (req.body && req.body.wzx_provider || '').trim();
 
       if (!wzxMessage) {
         return res.json({ code: 1, msg: '消息内容不能为空', data: null });
@@ -31,8 +32,9 @@ const wzx_chatController = {
       // 2. 取最近 10 条记录作为上下文（已含当前消息）
       const wzxHistory = await wzx_chatModel.getRecentMessages(wzxSessionId, 10);
 
-      // 3. 调用硅基流动获取 AI 回复
-      const wzxReply = await wzx_customerService.getReply(wzxHistory);
+      // 3. 调用指定服务商获取 AI 回复（硅基流动 / 七牛 热切换）
+      const wzxReply = await wzx_customerService.getReply(wzxHistory, wzxProvider);
+      const wzxUsedProvider = wzx_customerService.wzx_resolveProvider(wzxProvider);
 
       // 4. 保存 AI 回复
       await wzx_chatModel.saveMessage(wzxSessionId, 'assistant', wzxReply);
@@ -41,7 +43,11 @@ const wzx_chatController = {
       return res.json({
         code: 0,
         msg: '回复成功',
-        data: { wzx_reply: wzxReply, wzx_session_id: wzxSessionId }
+        data: {
+          wzx_reply: wzxReply,
+          wzx_session_id: wzxSessionId,
+          wzx_provider: wzxUsedProvider
+        }
       });
     } catch (err) {
       console.error('[客服] 回复失败：', err.message);

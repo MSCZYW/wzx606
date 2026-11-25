@@ -66,6 +66,7 @@
   var wzxSendBtn = document.getElementById('wzx_send_btn');
   var wzxClearBtn = document.getElementById('wzx_clear_btn');
   var wzxQuickList = document.getElementById('wzx_quick_list');
+  var wzxProviderSelect = document.getElementById('wzx_provider_select');
   var wzxSending = false;
 
   // 会话ID：同一浏览器保持同一会话（有上下文记忆）
@@ -115,7 +116,8 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           wzx_message: wzxText,
-          wzx_session_id: wzxSessionId || undefined
+          wzx_session_id: wzxSessionId || undefined,
+          wzx_provider: wzxProviderSelect.value
         })
       });
       var wzxData = await wzxResp.json();
@@ -124,7 +126,7 @@
       wzx_removeLoading();
       if (wzxData.code === 0) {
         wzxSessionId = wzxData.data.wzx_session_id;
-        wzx_addMsg('ai', wzxData.data.wzx_reply);
+        wzx_addMsg('ai', '【' + (wzxData.data.wzx_provider === 'qiniu' ? '七牛' : '硅基流动') + '】' + wzxData.data.wzx_reply);
       } else {
         console.error('客服接口返回错误：', wzxData.msg);
         wzx_addMsg('ai', '抱歉，我暂时无法回答：' + wzxData.msg);

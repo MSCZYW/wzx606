@@ -115,6 +115,18 @@ body {
 }
 .wzx_clear_btn:hover { background: rgba(255,255,255,.16); }
 
+.wzx_provider_select {
+  background: rgba(255,255,255,.08);
+  color: #b8c5e2;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+.wzx_provider_select option { color: #1a1035; }
+
 /* ---------- 消息区 ---------- */
 .wzx_chat_box {
   flex: 1;
