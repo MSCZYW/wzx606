@@ -97,3 +97,29 @@ USE wzx_web;
 UPDATE wzx_gallery SET img_url = REPLACE(img_url, '.svg', '.jpg') WHERE img_url LIKE '/images/wzx_gallery_%.svg';
 -- 执行后各条 img_url 为 /images/wzx_gallery_01.jpg ~ /images/wzx_gallery_10.jpg
 
+## 2026-11-25 新建在线客服聊天记录表 wzx_chat_message
+
+-- 说明：为 AI 在线客服功能新建聊天记录表，保存用户与客服 AI 的对话。
+-- 以下 SQL 在 wzx_web 库中按顺序执行。
+
+USE wzx_web;
+
+CREATE TABLE IF NOT EXISTS wzx_chat_message (
+  wzx_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '消息ID',
+  wzx_session_id VARCHAR(64) NOT NULL COMMENT '会话ID',
+  wzx_role VARCHAR(20) NOT NULL COMMENT '角色：user/assistant',
+  wzx_content TEXT NOT NULL COMMENT '消息内容',
+  wzx_create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发送时间',
+  INDEX idx_wzx_session (wzx_session_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='在线客服聊天记录表';
+
+INSERT INTO wzx_chat_message (wzx_session_id, wzx_role, wzx_content, wzx_create_time) VALUES
+('wzx_demo_session', 'user', '你好，你们平台是做什么的？', '2026-11-20 10:00:00'),
+('wzx_demo_session', 'assistant', '您好！我是拾光集市在线客服。拾光集市是校园二手交易平台，可以在这里发布和购买二手数码、图书、运动用品等，欢迎体验！', '2026-11-20 10:00:05'),
+('wzx_demo_session', 'user', '在你们平台卖东西怎么定价？', '2026-11-20 10:01:00'),
+('wzx_demo_session', 'assistant', '建议根据物品成色和使用时长定价，一般为原价的3-6折。可以在商品描述里写清楚使用情况和瑕疵，更容易成交哦。', '2026-11-20 10:01:06'),
+('wzx_demo_session', 'user', '买二手耳机要注意什么？', '2026-11-20 10:02:00'),
+('wzx_demo_session', 'assistant', '建议先确认耳机功能正常、配件齐全，尽量选择当面交易验货，检查音质、降噪和续航是否与描述一致。', '2026-11-20 10:02:07'),
+('wzx_demo_session', 'user', '怎么联系卖家？', '2026-11-20 10:03:00'),
+('wzx_demo_session', 'assistant', '在商品页面点击"联系卖家"，即可与卖家在线沟通，约定看货和交易时间。祝您购物愉快！', '2026-11-20 10:03:05');
+

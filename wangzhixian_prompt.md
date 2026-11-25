@@ -17,3 +17,5 @@
 2026-11-20 | 帮我解决图片中的问题（图文展示页图片全部显示"The image is generating..."占位图。排查：text_to_image 在线图片生成服务持续返回同一占位图，无法出图。解决：本地生成 10 张按分类配色的 SVG 封面图到 frontend/images/，UPDATE wzx_gallery 表将 img_url 改为本地路径 /images/wzx_gallery_01.svg ~ 10.svg，页面立即正常显示） | 大模型：GLM-5.3-Flash
 
 2026-11-20 | 删除原有图片，生成新的更加贴近现实的图片（在线生图服务仍卡死，改用 AI 图片生成工具生成 10 张写实风格 JPG 产品/场景照片，保存到 frontend/images/wzx_gallery_01.jpg ~ 10.jpg，删除原 10 张 SVG 封面，UPDATE wzx_gallery 将 img_url 后缀由 .svg 改为 .jpg） | 大模型：GLM-5.3-Flash
+
+2026-11-25 | 使用硅基流动 完成在线客服页面（新建 wzx_chat_message 表存对话记录并插入 8 条测试数据；后端 MVC：POST /api/chat -> wzx_chatController -> wzx_customerService 调用硅基流动 chat/completions（Qwen/Qwen2.5-7B-Instruct，Key 从 .env 读取），带 10 条上下文记忆，回复保存数据库；前端 service.html 聊天界面：毛玻璃卡片 + canvas 粒子背景 + 消息气泡 + 快捷问题 + 清空会话，数据与错误输出到控制台；首页加入口；实测 AI 回复正常、上下文连贯） | 大模型：GLM-5.3-Flash

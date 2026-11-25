@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+  姓名：王治贤 | 学号：24002120606 |
+  时间：2026-11-25 | 大模型：GLM-5.3-Flash
+  说明：在线客服页面，AI 客服"小拾"（硅基流动 Qwen2.5-7B-Instruct）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线客服 - 拾光集市</title>
+  <link rel="stylesheet" href="css/wzx_service.css">
+</head>
+<body>
+  <canvas id="wzx_bg_canvas"></canvas>
+
+  <div class="wzx_page_wrap">
+    <header class="wzx_page_header">
+      <a class="wzx_back_link" href="index.html">‹ 返回首页</a>
+      <h1 class="wzx_page_title">在线客服</h1>
+      <p class="wzx_api_url" id="wzx_api_url">接口地址：/api/chat</p>
+    </header>
+
+    <main class="wzx_chat_card">
+      <div class="wzx_chat_toolbar">
+        <span class="wzx_cs_avatar">拾</span>
+        <div class="wzx_cs_info">
+          <span class="wzx_cs_name">小拾 · AI 客服</span>
+          <span class="wzx_cs_status" id="wzx_cs_status">● 在线</span>
+        </div>
+        <button class="wzx_clear_btn" id="wzx_clear_btn" type="button">清空会话</button>
+      </div>
+
+      <div class="wzx_chat_box" id="wzx_chat_box">
+        <div class="wzx_msg_row wzx_msg_ai">
+          <div class="wzx_msg_bubble">您好，我是拾光集市在线客服小拾～ 关于二手交易、定价、交易安全等问题都可以问我。</div>
+        </div>
+      </div>
+
+      <div class="wzx_quick_list" id="wzx_quick_list">
+        <button class="wzx_quick_btn" type="button" data-q="在你们平台卖东西怎么定价？">怎么定价？</button>
+        <button class="wzx_quick_btn" type="button" data-q="在你们平台交易需要注意什么安全问题？">交易安全</button>
+        <button class="wzx_quick_btn" type="button" data-q="怎么在拾光集市发布我的二手商品？">如何发布商品？</button>
+      </div>
+
+      <form class="wzx_input_row" id="wzx_input_form" autocomplete="off">
+        <input class="wzx_input" id="wzx_input" type="text" maxlength="500" placeholder="输入您想咨询的问题…">
+        <button class="wzx_send_btn" id="wzx_send_btn" type="submit">发送</button>
+      </form>
+    </main>
+
+    <footer class="wzx_footer">
+      <p>高级网页设计 · 王治贤 · 24002120606</p>
+    </footer>
+  </div>
+
+  <script src="js/wzx_service.js"></script>
+</body>
+</html>
