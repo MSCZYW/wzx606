@@ -1,6 +1,7 @@
 node_modules/
 backend/node_modules/
 .env
+.trae-html-share-packages/
 backend/.env
 npm-debug.log*
 .DS_Store
