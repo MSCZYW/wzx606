@@ -57,7 +57,9 @@
   })();
 
   // ---------- 图像识别逻辑 ----------
-  var wzxApiUrl = window.location.origin.replace(/:\d+$/, ':8606') + '/api/vision/describe';
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  var wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
+  var wzxApiUrl = (wzx_apiBase || window.location.origin) + '/api/vision/describe';
   document.getElementById('wzx_api_url').textContent = '接口地址：' + wzxApiUrl;
 
   var wzxUploadArea = document.getElementById('wzx_upload_area');
@@ -100,7 +102,7 @@
     try {
       var form = new FormData();
       form.append('wzx_image', file);
-      var resp = await fetch('/api/vision/describe', { method: 'POST', body: form });
+      var resp = await fetch(wzx_apiBase + '/api/vision/describe', { method: 'POST', body: form });
       var data = await resp.json();
       console.log('图像识别接口返回：', data);
 

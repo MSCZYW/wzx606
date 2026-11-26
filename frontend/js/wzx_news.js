@@ -6,7 +6,9 @@
 
 (function () {
   // 页面顶部显示当前调用的接口地址
-  const wzx_apiUrl = window.location.origin + '/api/news';
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  const wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
+  const wzx_apiUrl = (wzx_apiBase || window.location.origin) + '/api/news';
   document.getElementById('wzx_api_url').textContent = 'GET ' + wzx_apiUrl;
 
   const wzx_listEl = document.getElementById('wzx_news_list');
@@ -17,7 +19,7 @@
     return wzx_str.replace('T', ' ').slice(0, 19);
   }
 
-  fetch('/api/news')
+  fetch(wzx_apiBase + '/api/news')
     .then(function (res) { return res.json(); })
     .then(function (wzx_res) {
       // 服务器返回的数据输出到浏览器控制台

@@ -57,6 +57,9 @@
     requestAnimationFrame(wzx_draw);
   })();
 
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  var wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
+
   // ---------- 元素 ----------
   var wzxUploadArea = document.getElementById('wzx_upload_area');
   var wzxFileInput = document.getElementById('wzx_file_input');
@@ -79,7 +82,7 @@
 
   async function wzx_loadFiles() {
     try {
-      var resp = await fetch('/api/kb/files');
+      var resp = await fetch(wzx_apiBase + '/api/kb/files');
       var data = await resp.json();
       console.log('知识库文件列表：', data);
       wzxFileList.innerHTML = '';
@@ -110,7 +113,7 @@
 
   async function wzx_deleteFile(wzxId) {
     try {
-      var resp = await fetch('/api/kb/files/' + wzxId, { method: 'DELETE' });
+      var resp = await fetch(wzx_apiBase + '/api/kb/files/' + wzxId, { method: 'DELETE' });
       var data = await resp.json();
       console.log('删除知识库文件 #' + wzxId + '：', data);
       wzx_loadFiles();
@@ -129,7 +132,7 @@
     try {
       var form = new FormData();
       form.append('wzx_file', file);
-      var resp = await fetch('/api/kb/upload', { method: 'POST', body: form });
+      var resp = await fetch(wzx_apiBase + '/api/kb/upload', { method: 'POST', body: form });
       var data = await resp.json();
       console.log('上传知识库文件返回：', data);
       if (data.code === 0) {
@@ -228,7 +231,7 @@
     wzx_addLoading();
 
     try {
-      var resp = await fetch('/api/kb/ask', {
+      var resp = await fetch(wzx_apiBase + '/api/kb/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

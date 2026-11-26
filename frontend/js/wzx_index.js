@@ -6,6 +6,8 @@
 
 (function () {
   /* ---------- canvas 粒子连线背景动画 ---------- */
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  const wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
   const wzx_canvas = document.getElementById('wzx_canvas_bg');
   const wzx_ctx = wzx_canvas.getContext('2d');
 
@@ -83,7 +85,7 @@
   });
 
   /* ---------- 获取站点信息（服务器返回的数据输出到控制台） ---------- */
-  fetch('/api/wzx_info')
+  fetch(wzx_apiBase + '/api/wzx_info')
     .then(function (res) { return res.json(); })
     .then(function (data) {
       console.log('服务器返回的站点信息：', data);

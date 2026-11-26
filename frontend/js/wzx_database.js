@@ -6,6 +6,8 @@
 
 (function () {
   const wzx_testBtn = document.getElementById('wzx_test_btn');
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  const wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
   const wzx_resultEl = document.getElementById('wzx_result');
 
   wzx_testBtn.addEventListener('click', function () {
@@ -15,7 +17,7 @@
     wzx_testBtn.disabled = true;
     wzx_testBtn.textContent = '测试中...';
 
-    fetch('/api/db-test', {
+    fetch(wzx_apiBase + '/api/db-test', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ wzx_user: wzx_username, wzx_password: wzx_password })

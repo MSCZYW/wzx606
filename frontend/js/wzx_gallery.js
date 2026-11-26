@@ -6,7 +6,9 @@
 
 (function () {
   // 页面顶部显示当前调用的接口地址
-  const wzx_apiUrl = window.location.origin + '/api/gallery';
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  const wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
+  const wzx_apiUrl = (wzx_apiBase || window.location.origin) + '/api/gallery';
   document.getElementById('wzx_api_url').textContent = 'GET ' + wzx_apiUrl;
 
   const wzx_gridEl = document.getElementById('wzx_gallery_grid');
@@ -25,7 +27,7 @@
     });
   }
 
-  fetch('/api/gallery')
+  fetch(wzx_apiBase + '/api/gallery')
     .then(function (res) { return res.json(); })
     .then(function (wzx_res) {
       // 服务器返回的数据输出到浏览器控制台

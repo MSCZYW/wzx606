@@ -27,3 +27,5 @@
 2026-11-25 | 完成图像识别功能，上传图片，返回该图片的描述，使用已有的api-key和模型（后端 MVC：POST /api/vision/describe -> wzx_visionController -> wzx_visionService，图片转 base64 data URL 调用硅基流动视觉模型 Qwen/Qwen3-VL-8B-Instruct（Key 从 .env 读取）；控制台输出发送/返回数据；前端 vision.html 拖拽/点击上传+预览+描述结果页并加入首页入口；用本地图片实测：白色耳机图识别描述准确） | 大模型：GLM-5.3-Flash
 
 2026-11-25 | 实现一个语音识别的功能，使用七牛的Qwen-Audio-3.0-ASR-Flash模型，输入语音，输出文字（后端 MVC：POST /api/asr/recognize -> wzx_asrController -> wzx_asrService；优先调用七牛 Qwen-Audio-3.0-ASR-Flash（chat/completions + input_audio），实测七牛网关该模型无可用通道（no available channels，91 个模型中无 ASR），自动降级调用硅基流动 /audio/transcriptions 的 Qwen/Qwen3-ASR-1.7B（同为 Qwen 语音识别模型），响应标明实际服务商；控制台输出发送/接收数据；前端 asr.html：MediaRecorder 麦克风录音（浏览器 webm 前端解码重采样为 16kHz 单声道 wav 上传保证兼容）+ 音频文件上传 + 播放预览 + 转写结果页，加入首页入口；用官方示例语音实测："请把七元项目的报告发给罗科。下周我们要上线悬殊系统。"转写准确） | 大模型：GLM-5.3-Flash
+
+2026-11-26 | 解决图中问题：用户直接双击打开 html（file:// 协议）导致相对路径 fetch 变成 file:///api/chat 请求失败报"网络异常"。修复：全部 8 个前端 JS 文件统一增加 wzx_apiBase 判断（http/https 用同源，file:// 打开自动指向 http://localhost:8606），11 处 fetch 调用与 6 处接口地址显示全部改用基地址（后端 cors 全开放，file:// 也能调通） | 大模型：GLM-5.3-Flash

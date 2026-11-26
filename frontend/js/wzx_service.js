@@ -57,7 +57,9 @@
   })();
 
   // ---------- 聊天逻辑 ----------
-  var wzxApiUrl = window.location.origin.replace(/:\d+$/, ':8606') + '/api/chat';
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  var wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
+  var wzxApiUrl = (wzx_apiBase || window.location.origin) + '/api/chat';
   document.getElementById('wzx_api_url').textContent = '接口地址：' + wzxApiUrl;
 
   var wzxChatBox = document.getElementById('wzx_chat_box');
@@ -111,7 +113,7 @@
     wzx_addLoading();
 
     try {
-      var wzxResp = await fetch('/api/chat', {
+      var wzxResp = await fetch(wzx_apiBase + '/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

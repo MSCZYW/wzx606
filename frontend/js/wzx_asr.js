@@ -60,7 +60,9 @@
   })();
 
   // ---------- 元素 ----------
-  var wzxApiUrl = window.location.origin.replace(/:\d+$/, ':8606') + '/api/asr/recognize';
+  // API 基地址：http 访问用同源；直接双击 html（file://）打开时指向后端 8606 端口
+  var wzx_apiBase = (location.protocol === 'http:' || location.protocol === 'https:') ? '' : 'http://localhost:8606';
+  var wzxApiUrl = (wzx_apiBase || window.location.origin) + '/api/asr/recognize';
   document.getElementById('wzx_api_url').textContent = '接口地址：' + wzxApiUrl;
 
   var wzxRecordBtn = document.getElementById('wzx_record_btn');
@@ -222,7 +224,7 @@
     try {
       var form = new FormData();
       form.append('wzx_audio', wzxCurrentBlob, wzxCurrentName || 'audio.wav');
-      var resp = await fetch('/api/asr/recognize', { method: 'POST', body: form });
+      var resp = await fetch(wzx_apiBase + '/api/asr/recognize', { method: 'POST', body: form });
       var data = await resp.json();
       console.log('语音识别接口返回：', data);
 
