@@ -26,3 +26,5 @@ POST /api/vision/describe | POST | multipart/form-data，字段 wzx_image：图�
 
 POST /api/asr/recognize | POST | multipart/form-data，字段 wzx_audio：音频文件（wav/mp3/m4a/webm/ogg/opus/aac/flac，≤20MB）| 成功：{ "code": 0, "msg": "识别成功", "data": { "wzx_text": "请把七元项目的报告发给罗科。下周我们要上线悬殊系统。", "wzx_provider": "siliconflow", "wzx_model": "Qwen/Qwen3-ASR-1.7B", "wzx_language": "Chinese", "wzx_file_size": 199378 } }；失败：{ "code": 1, "msg": "语音识别失败：<原因>", "data": null }；优先调用七牛 Qwen-Audio-3.0-ASR-Flash（chat/completions + input_audio），七牛通道不可用时自动降级硅基流动 /audio/transcriptions（Qwen/Qwen3-ASR-1.7B）；服务端控制台输出发送（base64 截断）与返回数据 | 2026-11-25
 
+变更（2026-11-26）：/api/chat 与 /api/kb/ask 响应 data 新增 wzx_fallback 字段（boolean）；所选服务商（如七牛）调用失败时自动降级到硅基流动并返回 wzx_provider="siliconflow"、wzx_fallback=true，前端显示"已降级"标记。七牛 403 trial_period_expired（需实名认证）触发验证通过。 | 2026-11-26
+

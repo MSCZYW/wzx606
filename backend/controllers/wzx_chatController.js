@@ -32,9 +32,9 @@ const wzx_chatController = {
       // 2. 取最近 10 条记录作为上下文（已含当前消息）
       const wzxHistory = await wzx_chatModel.getRecentMessages(wzxSessionId, 10);
 
-      // 3. 调用指定服务商获取 AI 回复（硅基流动 / 七牛 热切换）
-      const wzxReply = await wzx_customerService.getReply(wzxHistory, wzxProvider);
-      const wzxUsedProvider = wzx_customerService.wzx_resolveProvider(wzxProvider);
+      // 3. 调用指定服务商获取 AI 回复（失败自动降级到硅基流动）
+      const wzxResult = await wzx_customerService.getReply(wzxHistory, wzxProvider);
+      const wzxReply = wzxResult.wzx_reply;
 
       // 4. 保存 AI 回复
       await wzx_chatModel.saveMessage(wzxSessionId, 'assistant', wzxReply);
@@ -46,7 +46,8 @@ const wzx_chatController = {
         data: {
           wzx_reply: wzxReply,
           wzx_session_id: wzxSessionId,
-          wzx_provider: wzxUsedProvider
+          wzx_provider: wzxResult.wzx_provider,
+          wzx_fallback: wzxResult.wzx_fallback
         }
       });
     } catch (err) {

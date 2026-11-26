@@ -29,3 +29,5 @@
 2026-11-25 | 实现一个语音识别的功能，使用七牛的Qwen-Audio-3.0-ASR-Flash模型，输入语音，输出文字（后端 MVC：POST /api/asr/recognize -> wzx_asrController -> wzx_asrService；优先调用七牛 Qwen-Audio-3.0-ASR-Flash（chat/completions + input_audio），实测七牛网关该模型无可用通道（no available channels，91 个模型中无 ASR），自动降级调用硅基流动 /audio/transcriptions 的 Qwen/Qwen3-ASR-1.7B（同为 Qwen 语音识别模型），响应标明实际服务商；控制台输出发送/接收数据；前端 asr.html：MediaRecorder 麦克风录音（浏览器 webm 前端解码重采样为 16kHz 单声道 wav 上传保证兼容）+ 音频文件上传 + 播放预览 + 转写结果页，加入首页入口；用官方示例语音实测："请把七元项目的报告发给罗科。下周我们要上线悬殊系统。"转写准确） | 大模型：GLM-5.3-Flash
 
 2026-11-26 | 解决图中问题：用户直接双击打开 html（file:// 协议）导致相对路径 fetch 变成 file:///api/chat 请求失败报"网络异常"。修复：全部 8 个前端 JS 文件统一增加 wzx_apiBase 判断（http/https 用同源，file:// 打开自动指向 http://localhost:8606），11 处 fetch 调用与 6 处接口地址显示全部改用基地址（后端 cors 全开放，file:// 也能调通） | 大模型：GLM-5.3-Flash
+
+2026-11-26 | 解决图中问题：在线客服选七牛报 403 trial_period_expired（七牛 24h 未实名试用期结束，账户级限制）。修复：wzx_customerService 增加自动降级——所选服务商失败且非 siliconflow 时自动改用硅基流动回答，chat/kb 响应加 wzx_fallback 标记，前端显示"已降级"；实测选七牛自动由硅基流动回复成功。七牛恢复需在 portal.qiniu.com 完成实名认证 | 大模型：GLM-5.3-Flash

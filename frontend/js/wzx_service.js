@@ -128,7 +128,12 @@
       wzx_removeLoading();
       if (wzxData.code === 0) {
         wzxSessionId = wzxData.data.wzx_session_id;
-        wzx_addMsg('ai', '【' + (wzxData.data.wzx_provider === 'qiniu' ? '七牛' : '硅基流动') + '】' + wzxData.data.wzx_reply);
+        var wzxTag = wzxData.data.wzx_provider === 'qiniu' ? '七牛' : '硅基流动';
+        if (wzxData.data.wzx_fallback) {
+          console.warn('所选服务商不可用，已自动降级到硅基流动');
+          wzxTag += ' · 已降级';
+        }
+        wzx_addMsg('ai', '【' + wzxTag + '】' + wzxData.data.wzx_reply);
       } else {
         console.error('客服接口返回错误：', wzxData.msg);
         wzx_addMsg('ai', '抱歉，我暂时无法回答：' + wzxData.msg);

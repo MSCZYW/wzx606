@@ -56,9 +56,26 @@ const wzx_customerService = {
   /**
    * 调用指定服务商的 Chat Completions 接口，返回 AI 回复文本
    * wzxContext：可选，RAG 检索到的知识库资料，注入到 system 提示词
+   * 返回 { wzx_reply, wzx_provider, wzx_fallback }：
+   * 指定服务商调用失败且不是 siliconflow 时，自动降级到 siliconflow
    */
   async getReply(wzxHistory, wzxProvider, wzxContext) {
     var wzxName = this.wzx_resolveProvider(wzxProvider);
+    try {
+      var wzxResult = await this.wzx_callProvider(wzxName, wzxHistory, wzxContext);
+      return { wzx_reply: wzxResult, wzx_provider: wzxName, wzx_fallback: false };
+    } catch (wzxErr) {
+      if (wzxName !== 'siliconflow' && process.env.SILICONFLOW_API_KEY) {
+        console.error('[客服] 服务商 ' + wzxName + ' 不可用，自动降级到 siliconflow：' + wzxErr.message);
+        var wzxFallback = await this.wzx_callProvider('siliconflow', wzxHistory, wzxContext);
+        return { wzx_reply: wzxFallback, wzx_provider: 'siliconflow', wzx_fallback: true };
+      }
+      throw wzxErr;
+    }
+  },
+
+  /** 单个服务商调用 */
+  async wzx_callProvider(wzxName, wzxHistory, wzxContext) {
     var wzxConf = this.wzx_providers[wzxName];
     var wzxApiKey = wzxConf.wzx_apiKey();
     var wzxBaseUrl = wzxConf.wzx_baseUrl();

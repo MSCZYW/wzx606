@@ -117,8 +117,8 @@ const wzx_kbController = {
       }
       console.log(`[知识库] 问题「${wzxQuestion}」命中 ${wzxHits.length} 个文本块`);
 
-      // 2. 调用大模型（带知识库上下文，控制台会输出收发数据）
-      const wzxReply = await wzx_customerService.getReply(
+      // 2. 调用大模型（带知识库上下文，控制台会输出收发数据；失败自动降级到硅基流动）
+      const wzxResult = await wzx_customerService.getReply(
         [{ wzx_role: 'user', wzx_content: wzxQuestion }],
         wzxProvider,
         wzxContext
@@ -128,9 +128,10 @@ const wzx_kbController = {
         code: 0,
         msg: '回答成功',
         data: {
-          wzx_answer: wzxReply,
+          wzx_answer: wzxResult.wzx_reply,
           wzx_sources: wzxSources,
-          wzx_provider: wzx_customerService.wzx_resolveProvider(wzxProvider)
+          wzx_provider: wzxResult.wzx_provider,
+          wzx_fallback: wzxResult.wzx_fallback
         }
       });
     } catch (err) {

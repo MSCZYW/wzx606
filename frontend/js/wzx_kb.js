@@ -244,7 +244,12 @@
 
       wzx_removeLoading();
       if (data.code === 0) {
-        wzx_addMsg('ai', '【' + (data.data.wzx_provider === 'qiniu' ? '七牛' : '硅基流动') + '】' + data.data.wzx_answer);
+        var wzxTag = data.data.wzx_provider === 'qiniu' ? '七牛' : '硅基流动';
+        if (data.data.wzx_fallback) {
+          console.warn('所选服务商不可用，已自动降级到硅基流动');
+          wzxTag += ' · 已降级';
+        }
+        wzx_addMsg('ai', '【' + wzxTag + '】' + data.data.wzx_answer);
         wzx_addSources(data.data.wzx_sources);
       } else {
         console.error('知识库问答错误：', data.msg);
