@@ -109,8 +109,15 @@
         console.log('录音结束，共 ' + wzxSeconds + ' 秒');
         // 浏览器录制格式（webm/ogg）转 wav 后预览
         var rawBlob = new Blob(wzxChunks, { type: wzxRecorder.mimeType || 'audio/webm' });
-        wzx_convertToWav(rawBlob).then(function (wavBlob) {
-          wzx_setAudio(wavBlob, '录音_' + wzxSeconds + 's.wav', wzxSeconds);
+        wzx_convertToWav(rawBlob).then(function (wzxOut) {
+          wzx_setAudio(wzxOut.blob, '录音_' + wzxSeconds + 's.wav', wzxSeconds);
+          // 静音检测：峰值音量过低时提示检查麦克风，不再上传
+          console.log('录音峰值音量：' + wzxOut.peak.toFixed(4));
+          if (wzxOut.peak < 0.02) {
+            wzxRecognizeBtn.disabled = true;
+            wzxResultText.textContent = '⚠ 录音几乎无声：请检查麦克风（Edge 地址栏麦克风权限、Windows 设置→隐私→麦克风→允许桌面应用访问、麦克风音量）后重新录音。';
+            console.error('检测到录音为静音，已阻止上传');
+          }
         }).catch(function (err) {
           console.error('录音格式转换失败，使用原始格式上传：', err);
           wzx_setAudio(rawBlob, '录音_' + wzxSeconds + 's.webm', wzxSeconds);
@@ -134,7 +141,8 @@
     }
   }
 
-  /** 浏览器录音（webm/ogg）解码重采样为 16kHz 单声道 wav，保证 ASR 接口兼容 */
+  /** 浏览器录音（webm/ogg）解码重采样为 16kHz 单声道 wav，保证 ASR 接口兼容。
+   *  返回 { blob, peak }：peak 为归一化峰值音量，用于静音检测 */
   function wzx_convertToWav(blob) {
     return new Promise(function (resolve, reject) {
       var reader = new FileReader();
@@ -150,11 +158,14 @@
           var dstRate = 16000;
           var dstLen = Math.ceil(buf.length * dstRate / srcRate);
           var mono = new Float32Array(dstLen);
+          var peak = 0;
           for (var i = 0; i < dstLen; i++) {
             var srcIdx = Math.floor(i * srcRate / dstRate);
             var sum = 0;
             for (var c = 0; c < chData.length; c++) sum += chData[c][srcIdx] || 0;
             mono[i] = sum / chData.length;
+            var abs = Math.abs(mono[i]);
+            if (abs > peak) peak = abs;
           }
           // 生成 wav（16bit PCM）
           var wavBuf = new ArrayBuffer(44 + dstLen * 2);
@@ -180,7 +191,7 @@
             view.setInt16(44 + k * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
           }
           ctx.close();
-          resolve(new Blob([wavBuf], { type: 'audio/wav' }));
+          resolve({ blob: new Blob([wavBuf], { type: 'audio/wav' }), peak: peak });
         }, function (err) {
           ctx.close();
           reject(err);

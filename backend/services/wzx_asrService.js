@@ -93,7 +93,9 @@ const wzx_asrService = {
       throw new Error('硅基流动 ASR HTTP ' + wzxResp.status + '：' + wzxText.slice(0, 200));
     }
     const wzxData = JSON.parse(wzxText);
-    if (!wzxData.text) throw new Error('硅基流动 ASR 返回内容为空');
+    if (!wzxData.text || !wzxData.text.trim()) {
+      throw new Error('未识别到语音内容（录音可能是静音、噪声或时长过短），请靠近麦克风重试');
+    }
     return {
       wzx_text: wzxData.text,
       wzx_provider: 'siliconflow',
